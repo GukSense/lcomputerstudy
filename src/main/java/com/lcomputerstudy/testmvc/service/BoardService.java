@@ -28,5 +28,10 @@ public class BoardService {
 	public static ArrayList<Board> getBoardList(){
 		return dao.getBoardList();
 	}
-	
+	public Board viewContents(Board board) {
+		return dao.viewContents(board);
+	}
+	public void hitsBoard(Board board) {
+		dao.hitsBoard(board);
+	}
 }

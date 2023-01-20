@@ -100,6 +100,68 @@ public class BoardDAO {
 		}
 		
 	}
-
-
+	
+	public Board viewContents(Board board) {
+		Board b = null;
+		String idx = Integer.toString(board.getB_idx());
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String query = "SELECT * FROM board WHERE b_idx=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idx);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				b = new Board();
+				b.setB_idx(Integer.parseInt(rs.getString("b_idx")));
+				b.setTitle(rs.getString("b_title"));
+				b.setContent(rs.getString("b_content"));
+				b.setDate(rs.getString("b_date"));
+				b.setHits(rs.getInt("b_hits"));
+//				b.setReviews(0);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();  
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return b;
+	}
+	public void hitsBoard(Board board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int idx = board.getB_idx();
+		
+		
+		
+		try {
+			String query = "UPDATE board SET b_hits = b_hits +1 WHERE b_idx=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(pstmt != null) {pstmt.close();}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }

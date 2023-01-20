@@ -10,7 +10,14 @@ public class Board {
 	private int reviews;
 	private String date;
 	private int b_idx;
+	private int hits;
 	
+	public int getHits() {
+		return hits;
+	}
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
 	public int getB_idx() {
 		return b_idx;
 	}

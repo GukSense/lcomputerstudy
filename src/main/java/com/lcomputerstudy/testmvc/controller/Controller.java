@@ -43,7 +43,7 @@ public class Controller extends HttpServlet {
 		ArrayList<Board> boardList = null;
 		int page = 1;
 		int count = 0;
-		
+		int hits = 0;
 		String idx = null;
 		String pw = null;
 		
@@ -190,12 +190,17 @@ public class Controller extends HttpServlet {
 				view = "board/registraion_result";
 				
 				break;
-			case "board-view-content":
+			case "/board-view-content.do":
+				board = new Board();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				
-				
-				
+				boardService = BoardService.getInstance();
+				boardService.hitsBoard(board);
+				board = boardService.viewContents(board);
+			
 				view = "board/contents";
+				
+				request.setAttribute("board", board);
+				request.setAttribute("hits", hits);
 				break;
 				
 		}
