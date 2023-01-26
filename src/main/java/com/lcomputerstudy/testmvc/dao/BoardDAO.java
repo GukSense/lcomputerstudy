@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Board;
+import com.lcomputerstudy.testmvc.vo.User;
 
 public class BoardDAO {
 	private static BoardDAO dao = null;
@@ -38,7 +39,9 @@ public class BoardDAO {
 					.append("			THEN	(DATE_FORMAT(b_date,'%H:%i'))\n")
 					.append("			ELSE 	(DATE_FORMAT(b_date,'%Y-%m-%d'))\n")
 					.append("			END\n")
-					.append("			) AS b_date\n")
+					.append("			) AS b_date,\n")
+					.append("			b_hits,\n")
+					.append("			b_writer\n")
 					.append("			FROM board\n")
 					.toString(); 
 			
@@ -55,6 +58,8 @@ public class BoardDAO {
 				board.setTitle(rs.getString("b_title"));
 				board.setContent(rs.getString("b_content"));
 				board.setDate(rs.getString("b_date"));
+				board.setHits(rs.getInt("b_hits"));
+				board.setWriter(rs.getString("b_writer"));
 				list.add(board);
 			}
 			
@@ -79,13 +84,15 @@ public class BoardDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		User user = null;
 		try {
-			String query = "insert into board(b_title,b_content,b_date) values(?,?,NOW()) ";
+			String query = "insert into board(b_title,b_content,b_date,b_writer) values(?,?,NOW(),?) ";
+			user = board.getUser();
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, user.getU_id());
 			pstmt.executeUpdate();
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -164,4 +171,49 @@ public class BoardDAO {
 		}
 		
 	}
+	public void editContent(Board board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String idx = Integer.toString(board.getB_idx());
+		try {
+			String query = "UPDATE board set b_title=?, b_content=? WHERE b_idx=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, idx);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(pstmt != null) {pstmt.close();}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void deleteBoard(Board board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String idx = Integer.toString(board.getB_idx());
+		try {
+			String query = "DELETE FROM board WHERE b_idx=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idx);
+			pstmt.executeUpdate();			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(pstmt != null) {pstmt.close();}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

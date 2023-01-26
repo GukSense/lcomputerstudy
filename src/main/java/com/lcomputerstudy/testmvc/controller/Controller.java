@@ -172,8 +172,8 @@ public class Controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				boardList = BoardService.getBoardList();
 				
-				view = "board/list";
 				
+				view = "board/list";
 				request.setAttribute("list", boardList);
 				
 				break;
@@ -182,11 +182,13 @@ public class Controller extends HttpServlet {
 				break;
 			case "/board-process.do":
 				board = new Board();
+				session = request.getSession();
 				board.setTitle(request.getParameter("board-title"));
 				board.setContent(request.getParameter("board-content"));
+				board.setUser((User)session.getAttribute("user"));
+				
 				boardService = BoardService.getInstance();
 				boardService.writingRegiStraion(board);
-//				boardService
 				view = "board/registraion_result";
 				
 				break;
@@ -202,7 +204,31 @@ public class Controller extends HttpServlet {
 				request.setAttribute("board", board);
 				request.setAttribute("hits", hits);
 				break;
+			case "/board-edit.do":
+				board = new Board();
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				boardService = BoardService.getInstance();
+				board = boardService.viewContents(board);
 				
+				view = "board/boardEdit";
+				request.setAttribute("board", board);
+				break;
+			case "/board-edit-result.do":
+				board = new Board();
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board.setTitle(request.getParameter("edit-title"));
+				board.setContent(request.getParameter("edit-content"));
+				boardService = BoardService.getInstance();
+				boardService.editContent(board);
+				view = "board/editResult";
+				break;
+			case "/board-delete.do":
+				board = new Board();
+				boardService = BoardService.getInstance();
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				boardService.deleteBoard(board);
+				view = "board/deleteResult";
+				break;
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher(view + ".jsp");
@@ -231,5 +257,6 @@ public class Controller extends HttpServlet {
 		}
 		return command;
 	}
+	
 	
 }

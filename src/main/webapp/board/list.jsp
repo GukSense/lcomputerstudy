@@ -44,9 +44,9 @@
 			<tr>
 				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}">${board.title }</a></td>
 				<td class= "td_contents">${board.content }</td>
-				<td>id</td>
+				<td>${board.writer} </td>
 				<td>${board.date }</td>
-				<td>0</td>
+				<td>${board.hits }</td>
 			</tr>
 		</c:forEach>
 		<tr>

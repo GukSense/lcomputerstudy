@@ -34,4 +34,10 @@ public class BoardService {
 	public void hitsBoard(Board board) {
 		dao.hitsBoard(board);
 	}
+	public void editContent(Board board) {
+		dao.editContent(board);
+	}
+	public void deleteBoard(Board board) {
+		dao.deleteBoard(board);
+	}
 }

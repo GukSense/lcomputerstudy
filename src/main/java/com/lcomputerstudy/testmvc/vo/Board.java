@@ -1,8 +1,4 @@
 package com.lcomputerstudy.testmvc.vo;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class Board {
 	private String title;
@@ -11,12 +7,26 @@ public class Board {
 	private String date;
 	private int b_idx;
 	private int hits;
+	private User user;
+	private String writer;
 	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public int getHits() {
 		return hits;
 	}
 	public void setHits(int hits) {
 		this.hits = hits;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public int getB_idx() {
 		return b_idx;
