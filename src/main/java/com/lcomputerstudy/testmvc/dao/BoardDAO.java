@@ -24,7 +24,7 @@ public class BoardDAO {
 		return dao;
 	}
 	
-	public ArrayList<Board> getBoardList() {
+	public ArrayList<Board> getBoardList() {	//게시물리스트
 		ArrayList<Board> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -80,19 +80,26 @@ public class BoardDAO {
 	
 	
 	
-	public void writingRegiStraion(Board board) {
+	public void writingRegiStraion(Board board) {	//글등록
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		User user = null;
 		try {
-			String query = "insert into board(b_title,b_content,b_date,b_writer) values(?,?,NOW(),?) ";
+			String query = "insert into board(b_title,b_content,b_date,b_writer,b_order,b_depth) values(?,?,NOW(),?,1,0) ";
 			user = board.getUser();
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, user.getU_id());
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			String query2 = "UPDATE 	board\n"
+					+ "SET  		b_group= LAST_INSERT_ID()\n"
+					+ "WHERE		b_idx = LAST_INSERT_ID()";
+			pstmt = conn.prepareStatement(query2);
 			pstmt.executeUpdate();
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -107,8 +114,40 @@ public class BoardDAO {
 		}
 		
 	}
+	public void replyBoard(Board board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		User user = null;
+		try {
+			user = board.getUser();
+			String query = new StringBuilder()
+					.append("INSERT INTO board(b_title, b_content,b_date,b_writer,b_order,b_depth)\n")
+					.append("VALUES (?,?,NOW(),?,b_order+1,b_depth+1) ")
+					.toString();			
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, query);
+			pstmt.setString(2, query);
+			pstmt.setString(3, user.getU_id());
+			
+		} catch(Exception e) {
+			
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+			} catch(SQLException e) {
+				
+			}
+		}
+		
+		
+		
+		
+	}
 	
-	public Board viewContents(Board board) {
+	public Board viewContents(Board board) {	//컨텐츠보기
 		Board b = null;
 		String idx = Integer.toString(board.getB_idx());
 		Connection conn = null;
@@ -146,7 +185,7 @@ public class BoardDAO {
 		
 		return b;
 	}
-	public void hitsBoard(Board board) {
+	public void hitsBoard(Board board) {	// 조회수
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int idx = board.getB_idx();
@@ -171,7 +210,8 @@ public class BoardDAO {
 		}
 		
 	}
-	public void editContent(Board board) {
+	
+	public void editContent(Board board) {	// 수정
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String idx = Integer.toString(board.getB_idx());
@@ -194,7 +234,7 @@ public class BoardDAO {
 			}
 		}
 	}
-	public void deleteBoard(Board board) {
+	public void deleteBoard(Board board) {	//삭제
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String idx = Integer.toString(board.getB_idx());

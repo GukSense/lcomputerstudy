@@ -22,5 +22,6 @@
 	<a href="/lcomputerstudy/board-list.do">돌아가기</a>
 	<a href="/lcomputerstudy/board-edit.do?b_idx=${board.b_idx }">수정</a>
 	<a href="/lcomputerstudy/board-delete.do?b_idx=${board.b_idx}">삭제</a>
+	<a href="/lcomputerstudy/board-reply.do?b_idx=${board.b_idx}">답글</a>
 </body>
 </html>

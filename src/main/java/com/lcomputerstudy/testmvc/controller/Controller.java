@@ -192,6 +192,28 @@ public class Controller extends HttpServlet {
 				view = "board/registraion_result";
 				
 				break;
+			case "/board-reply.do":
+				board = new Board();
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));		
+				
+				view = "board/reply";
+				
+				request.setAttribute("board", board);
+				break;
+			case "/board-reply-process.do":
+				board = new Board();
+				session = request.getSession();
+				
+				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board.setTitle(request.getParameter("reply-title"));
+				board.setContent(request.getParameter("reply-content"));
+				board.setUser((User)session.getAttribute("user"));				
+				
+				boardService = BoardService.getInstance();
+				boardService.replyBoard(board);
+				
+				view = "board/replyResult";
+				break;
 			case "/board-view-content.do":
 				board = new Board();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
