@@ -194,7 +194,7 @@ public class Controller extends HttpServlet {
 				break;
 			case "/board-reply.do":
 				board = new Board();
-				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));		
+				board.setB_group(Integer.parseInt(request.getParameter("b_group")));		
 				
 				view = "board/reply";
 				
@@ -204,19 +204,21 @@ public class Controller extends HttpServlet {
 				board = new Board();
 				session = request.getSession();
 				
-				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board.setTitle(request.getParameter("reply-title"));
 				board.setContent(request.getParameter("reply-content"));
 				board.setUser((User)session.getAttribute("user"));				
 				
 				boardService = BoardService.getInstance();
 				boardService.replyBoard(board);
+				boardService.replyOrderIncre(board);
 				
 				view = "board/replyResult";
 				break;
 			case "/board-view-content.do":
 				board = new Board();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				boardService = BoardService.getInstance();
 				boardService.hitsBoard(board);
 				board = boardService.viewContents(board);
@@ -249,7 +251,7 @@ public class Controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				boardService.deleteBoard(board);
-				view = "board/deleteResult";	//aaaa
+				view = "board/deleteResult";	
 				break;
 		}
 		

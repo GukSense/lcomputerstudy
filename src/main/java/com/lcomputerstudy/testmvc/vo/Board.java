@@ -9,7 +9,15 @@ public class Board {
 	private int hits;
 	private User user;
 	private String writer;
+	private int b_group;
 	
+	
+	public int getB_group() {
+		return b_group;
+	}
+	public void setB_group(int b_group) {
+		this.b_group = b_group;
+	}
 	public String getWriter() {
 		return writer;
 	}
