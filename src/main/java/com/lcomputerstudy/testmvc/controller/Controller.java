@@ -249,7 +249,7 @@ public class Controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				boardService.deleteBoard(board);
-				view = "board/deleteResult";
+				view = "board/deleteResult";	//aaaa
 				break;
 		}
 		
