@@ -9,6 +9,7 @@
 <body>
 	<form method="post" action="/lcomputerstudy/board-reply-process.do" onsubmit="return confirm('등록하시겠습니까?');" name="registration">
 				<input type="hidden" name="b_group" value="${board.b_group }">
+				<input type="hidden" name="b_order" value="${board.b_order }">
     			<table style= "text-align: center; boarder: 1px solid #dddddd">
 	    	    	<thead>
 		    	    	<tr>

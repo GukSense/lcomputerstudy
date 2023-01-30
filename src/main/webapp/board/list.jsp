@@ -42,7 +42,7 @@
 		</tr>
 		<c:forEach items="${list}" var="board">
 			<tr>
-				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}">${board.title }</a></td>
+				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}">${board.title }</a></td>
 				
 				<td class= "td_contents">${board.content }</td>
 				<td>${board.writer} </td>

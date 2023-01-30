@@ -17,7 +17,7 @@
 	    	    	</thead>
 			    	<tbody>
 			    		<tr>
-			    			<td><input type="text"  placeholder="글 제목"  name="edit-title" maxlength="50" ></td>
+			    			<td><input type="text"  placeholder="${board.title }"  name="edit-title" maxlength="50"></td>
 			    		</tr>
 			    		<tr>
 			    			<td><textarea  placeholder="글 내용"  name="edit-content" maxlength="2048" style= "height:350px" ></textarea></td>

@@ -42,7 +42,8 @@ public class BoardDAO {
 					.append("			) AS b_date,\n")
 					.append("			b_hits,\n")
 					.append("			b_writer,\n")
-					.append("			b_group\n")
+					.append("			b_group,\n")
+					.append("			b_order\n")
 					.append("			FROM board\n")
 					.toString(); 
 			
@@ -62,6 +63,7 @@ public class BoardDAO {
 				board.setHits(rs.getInt("b_hits"));
 				board.setWriter(rs.getString("b_writer"));
 				board.setB_group(rs.getInt("b_group"));
+				board.setB_order(rs.getInt("b_order"));
 				list.add(board);
 			}
 			
@@ -136,11 +138,10 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			String query2 = "update board set b_depth = b_depth+1 where b_idx = last_insert_id()";
+			String query2 = "update board set b_depth = b_depth+1,b_order=?+1 where b_idx = last_insert_id()";
 			pstmt = conn.prepareStatement(query2);
-			pstmt.executeUpdate();
-			
-			
+			pstmt.setInt(1, board.getB_order());
+			pstmt.executeUpdate();	
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -159,15 +160,20 @@ public class BoardDAO {
 	public void replyOrderIncre(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		int group = board.getB_group();
-		
-		
 		
 		try {
-			String query = "UPDATE board SET b_order = b_order +1 WHERE b_group=? and b_depth >=1";
+			String query = "UPDATE 	board\n" + 
+							"SET 	b_order =\n" + 
+							"CASE 	WHEN b_order > ? THEN b_order = ? +1\n" + 
+							"ELSE 	b_order\n" + 
+							"END	\n" + 
+							"WHERE 	b_group = b_group=? AND b_depth >=1";
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, group);
+			pstmt.setInt(1, board.getB_order());
+			pstmt.setInt(2, board.getB_order());
+			pstmt.setInt(3, board.getB_group());
+			
 			pstmt.executeUpdate();			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -200,6 +206,7 @@ public class BoardDAO {
 				b = new Board();
 				b.setB_idx(Integer.parseInt(rs.getString("b_idx")));
 				b.setB_group(Integer.parseInt(rs.getString("b_group")));
+				b.setB_order(Integer.parseInt(rs.getString("b_order")));
 				b.setTitle(rs.getString("b_title"));
 				b.setContent(rs.getString("b_content"));
 				b.setDate(rs.getString("b_date"));

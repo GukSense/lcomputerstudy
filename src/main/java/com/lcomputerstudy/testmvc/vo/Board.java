@@ -10,8 +10,15 @@ public class Board {
 	private User user;
 	private String writer;
 	private int b_group;
+	private int b_order;
 	
 	
+	public int getB_order() {
+		return b_order;
+	}
+	public void setB_order(int b_order) {
+		this.b_order = b_order;
+	}
 	public int getB_group() {
 		return b_group;
 	}
