@@ -10,6 +10,7 @@
 	<form method="post" action="/lcomputerstudy/board-reply-process.do" onsubmit="return confirm('등록하시겠습니까?');" name="registration">
 				<input type="hidden" name="b_group" value="${board.b_group }">
 				<input type="hidden" name="b_order" value="${board.b_order }">
+				<input type="hidden" name="b_depth" value="${board.b_depth }">
     			<table style= "text-align: center; boarder: 1px solid #dddddd">
 	    	    	<thead>
 		    	    	<tr>

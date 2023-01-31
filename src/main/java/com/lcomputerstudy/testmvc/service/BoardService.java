@@ -43,7 +43,7 @@ public class BoardService {
 	public void replyBoard(Board board) {
 		dao.replyBoard(board);
 	}
-	public void replyOrderIncre(Board board) {
-		dao.replyOrderIncre(board);
-	}
+//	public void replyOrderIncre(Board board) {
+//		dao.replyOrderIncre(board);
+//	}
 }

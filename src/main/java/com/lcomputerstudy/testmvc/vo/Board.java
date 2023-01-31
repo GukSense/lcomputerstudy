@@ -11,8 +11,15 @@ public class Board {
 	private String writer;
 	private int b_group;
 	private int b_order;
+	private int b_depth;
 	
 	
+	public int getB_depth() {
+		return b_depth;
+	}
+	public void setB_depth(int b_depth) {
+		this.b_depth = b_depth;
+	}
 	public int getB_order() {
 		return b_order;
 	}

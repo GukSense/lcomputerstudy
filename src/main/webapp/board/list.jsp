@@ -18,16 +18,47 @@
 		width:200px;
 		text-align:center;
 	}
-	.written {
-		float:right;
-	}
 	table .td_contents {
 		test-align:left;
 		width:800px;
 	    float:left;
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
-	
+	.search {
+		height: 40px;
+		width: 400px;
+		border: 1px solid #1b5ac2;
+		bachground: #ffffff;
+		display:flex;
+		justify-content: space-between;
+		
+	}
+	.i_search {
+		font-size: 16px;
+		width: 325px;
+		padding: 10px;
+		border: 0px;
+		outline:none;
+		float:left;
+	}
+	.s_button{
+		width:50px;
+		height:100%;
+		border:0px;
+		background:#1b5ac2;
+		outline: none;
+		float: right;
+		color: #ffffff;
+	}
+	.written {
+		width:70px;
+		height:100%;
+		border:0px;
+		background:#1b5ac2;
+		outline: none;
+		float: right;
+		color: #ffffff;
+	}
 	
 </style>
 </head>
@@ -42,7 +73,7 @@
 		</tr>
 		<c:forEach items="${list}" var="board">
 			<tr>
-				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}">${board.title }</a></td>
+				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">${board.title }</a></td>
 				
 				<td class= "td_contents">${board.content }</td>
 				<td>${board.writer} </td>
@@ -52,10 +83,14 @@
 		</c:forEach>
 		<tr>
 			<td colspan="5" style="border:none; padding:10px 0px;" >
+		<div class="search">
+				<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
 				<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
-    		</td>
+		</div>
 		</tr>
 	</table>
+	
+	
 	
 </body>
 </html>

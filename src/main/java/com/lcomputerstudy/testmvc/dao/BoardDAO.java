@@ -43,8 +43,10 @@ public class BoardDAO {
 					.append("			b_hits,\n")
 					.append("			b_writer,\n")
 					.append("			b_group,\n")
-					.append("			b_order\n")
-					.append("			FROM board\n")
+					.append("			b_order,\n")
+					.append("			b_depth\n")
+					.append("FROM 		board\n")
+					.append("ORDER BY  	b_group DESC , b_order ASC \n")
 					.toString(); 
 			
 			
@@ -64,6 +66,7 @@ public class BoardDAO {
 				board.setWriter(rs.getString("b_writer"));
 				board.setB_group(rs.getInt("b_group"));
 				board.setB_order(rs.getInt("b_order"));
+				board.setB_depth(rs.getInt("b_depth"));
 				list.add(board);
 			}
 			
@@ -125,22 +128,25 @@ public class BoardDAO {
 		try {
 			user = board.getUser();
 			String query = new StringBuilder()
-					.append("INSERT INTO board(b_title, b_content,b_date,b_writer,b_group)\n")
-					.append("VALUES (?,?,NOW(),?,?) ")
+					.append("INSERT INTO board(b_title, b_content,b_date,b_writer,b_group,b_order,b_depth)\n")
+					.append("VALUES (?,?,NOW(),?,?,?,?)")
 					.toString();			
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			
+			String s = "RE:";
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, user.getU_id());
 			pstmt.setInt(4, board.getB_group());
+			pstmt.setInt(5, board.getB_order());
+			pstmt.setInt(6, board.getB_depth());
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			String query2 = "update board set b_depth = b_depth+1,b_order=?+1 where b_idx = last_insert_id()";
+			String query2 = "update board set b_order=b_order+1 where b_group = ? and b_order >= ? and b_idx != last_insert_id()";
 			pstmt = conn.prepareStatement(query2);
-			pstmt.setInt(1, board.getB_order());
+			pstmt.setInt(1, board.getB_group());
+			pstmt.setInt(2, board.getB_order());
 			pstmt.executeUpdate();	
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -157,36 +163,36 @@ public class BoardDAO {
 		
 		
 	}
-	public void replyOrderIncre(Board board) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			String query = "UPDATE 	board\n" + 
-							"SET 	b_order =\n" + 
-							"CASE 	WHEN b_order > ? THEN b_order = ? +1\n" + 
-							"ELSE 	b_order\n" + 
-							"END	\n" + 
-							"WHERE 	b_group = b_group=? AND b_depth >=1";
-			conn = DBConnection.getConnection();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, board.getB_order());
-			pstmt.setInt(2, board.getB_order());
-			pstmt.setInt(3, board.getB_group());
-			
-			pstmt.executeUpdate();			
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(conn != null) {conn.close();}
-				if(pstmt != null) {pstmt.close();}
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+//	public void replyOrderIncre(Board board) {
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			String query = "UPDATE 	board\n" + 
+//							"SET 	b_order =\n" + 
+//							"CASE 	WHEN b_order > ? THEN b_order = ? +1\n" + 
+//							"ELSE 	b_order\n" + 
+//							"END	\n" + 
+//							"WHERE 	b_group = b_group=? AND b_depth >=1";
+//			conn = DBConnection.getConnection();
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setInt(1, board.getB_order());
+//			pstmt.setInt(2, board.getB_order());
+//			pstmt.setInt(3, board.getB_group());
+//			
+//			pstmt.executeUpdate();			
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(conn != null) {conn.close();}
+//				if(pstmt != null) {pstmt.close();}
+//			} catch(SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//	}
 	public Board viewContents(Board board) {	//컨텐츠보기
 		Board b = null;
 		String idx = Integer.toString(board.getB_idx());
@@ -207,6 +213,7 @@ public class BoardDAO {
 				b.setB_idx(Integer.parseInt(rs.getString("b_idx")));
 				b.setB_group(Integer.parseInt(rs.getString("b_group")));
 				b.setB_order(Integer.parseInt(rs.getString("b_order")));
+				b.setB_depth(Integer.parseInt(rs.getString("b_depth")));
 				b.setTitle(rs.getString("b_title"));
 				b.setContent(rs.getString("b_content"));
 				b.setDate(rs.getString("b_date"));

@@ -195,6 +195,7 @@ public class Controller extends HttpServlet {
 			case "/board-reply.do":
 				board = new Board();
 				board.setB_order(Integer.parseInt(request.getParameter("b_order")));
+				board.setB_depth(Integer.parseInt(request.getParameter("b_depth")));				
 				board.setB_group(Integer.parseInt(request.getParameter("b_group")));		
 				
 				view = "board/reply";
@@ -204,7 +205,8 @@ public class Controller extends HttpServlet {
 			case "/board-reply-process.do":
 				board = new Board();
 				session = request.getSession();
-				board.setB_order(Integer.parseInt(request.getParameter("b_order")));
+				board.setB_order(Integer.parseInt(request.getParameter("b_order"))+1);
+				board.setB_depth(Integer.parseInt(request.getParameter("b_depth"))+1);
 				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board.setTitle(request.getParameter("reply-title"));
 				board.setContent(request.getParameter("reply-content"));
@@ -212,7 +214,6 @@ public class Controller extends HttpServlet {
 				
 				boardService = BoardService.getInstance();
 				boardService.replyBoard(board);
-				boardService.replyOrderIncre(board);
 				
 				view = "board/replyResult";
 				break;
@@ -220,6 +221,7 @@ public class Controller extends HttpServlet {
 				board = new Board();
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				board.setB_order(Integer.parseInt(request.getParameter("b_order")));
+				board.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				boardService = BoardService.getInstance();
 				boardService.hitsBoard(board);
