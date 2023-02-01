@@ -10,7 +10,7 @@ public class DBConnection {
 		
 		String url = "jdbc:mysql://localhost:3306/bgg";
 		String id = "root";
-		String pw = "1234";
+		String pw = "548412";
 		
 		Class.forName("org.mariadb.jdbc.Driver");
 		conn = DriverManager.getConnection(url,id,pw);

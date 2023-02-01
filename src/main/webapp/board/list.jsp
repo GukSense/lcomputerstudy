@@ -24,14 +24,16 @@
 	    float:left;
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
-	.search {
+	.fl_search{
 		height: 40px;
 		width: 400px;
 		border: 1px solid #1b5ac2;
 		bachground: #ffffff;
-		display:flex;
-		justify-content: space-between;
-		
+	}
+	.fr {
+		height: 40px;
+		border: 1px solid #1b5ac2;
+		background: #ffffff;
 	}
 	.i_search {
 		font-size: 16px;
@@ -41,7 +43,7 @@
 		outline:none;
 		float:left;
 	}
-	.s_button{
+	.s_button, .written{
 		width:50px;
 		height:100%;
 		border:0px;
@@ -50,14 +52,15 @@
 		float: right;
 		color: #ffffff;
 	}
-	.written {
-		width:70px;
-		height:100%;
-		border:0px;
-		background:#1b5ac2;
-		outline: none;
-		float: right;
-		color: #ffffff;
+	
+	.fr {
+		float:right;
+		
+	}
+	.btm {
+		display:flex;
+		justify-content: space-between;
+		clear:both;
 	}
 	
 </style>
@@ -83,9 +86,13 @@
 		</c:forEach>
 		<tr>
 			<td colspan="5" style="border:none; padding:10px 0px;" >
-		<div class="search">
-				<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
-				<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
+		<div class="btm">
+			<div class="fl_search">
+					<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
+			</div>
+			<div class= "fr">
+					<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
+			</div>
 		</div>
 		</tr>
 	</table>
