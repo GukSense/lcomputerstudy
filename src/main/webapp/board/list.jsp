@@ -24,11 +24,17 @@
 	    float:left;
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
+	.search{
+		display:flex;
+	}
+	
 	.fl_search{
 		height: 40px;
-		width: 400px;
+		width: 460px;
 		border: 1px solid #1b5ac2;
 		bachground: #ffffff;
+		display:flex;
+		
 	}
 	.fr {
 		height: 40px;
@@ -52,7 +58,13 @@
 		float: right;
 		color: #ffffff;
 	}
-	
+	.select {
+		height: 40px;
+		width: 64px;
+		border: 1px solid #1b5ac2;
+		background:#1b5ac2;
+		display:flex;
+	}
 	.fr {
 		float:right;
 		
@@ -88,7 +100,16 @@
 			<td colspan="5" style="border:none; padding:10px 0px;" >
 		<div class="btm">
 			<div class="fl_search">
-					<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
+					<span class="select">
+						<select name="search_target">
+							<option value="title">제목</option>
+							<option value="title_content">내용</option>
+							<option value="nick_name">작성자</option>
+						</select>
+					</span>
+					<span class="search">
+						<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
+					</span>
 			</div>
 			<div class= "fr">
 					<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
