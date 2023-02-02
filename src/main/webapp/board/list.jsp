@@ -7,10 +7,13 @@
 <meta charset="UTF-8">
 <title>board-list</title>
 <style>
+	a {
+		text-decoration: none; /* 링크의 밑줄 제거 */
+  		color: inherit; /* 링크의 색상 제거 */
+	}
 	table {
 		border-collapse:collapse;
 		margin:40px auto
-		
 	}
 	
 	table tr th, table tr td {
@@ -31,7 +34,6 @@
 	.fl_search{
 		height: 40px;
 		width: 460px;
-		border: 1px solid #1b5ac2;
 		bachground: #ffffff;
 		display:flex;
 		
@@ -40,6 +42,12 @@
 		height: 40px;
 		border: 1px solid #1b5ac2;
 		background: #ffffff;
+	}
+	.select_t {
+		color:#ffffff;
+		background:#1b5ac2;
+		border: 1px solid #1b5ac2;
+		outline:none;
 	}
 	.i_search {
 		font-size: 16px;
@@ -60,7 +68,7 @@
 	}
 	.select {
 		height: 40px;
-		width: 64px;
+		width: 462px;
 		border: 1px solid #1b5ac2;
 		background:#1b5ac2;
 		display:flex;
@@ -79,7 +87,7 @@
 </head>
 <body>
 	<table>
-		<tr>
+		<tr style="background:#1b5ac2; color=#ffffff;">
 			<th>제목</th>
 			<th>내용</th>
 			<th>작성자</th>
@@ -102,16 +110,16 @@
 			<div class="fl_search">
 				<form method="post" action="/lcomputerstudy/board-list.do" name="search">
 					<span class="select">
-						<select name="search_target">
+						<select class ="select_t" name="search_target">
 							<option value="title">제목</option>
 							<option value="title_content">내용</option>
 							<option value="nick_name">작성자</option>
 						</select>
-					</span>
-					<span class="search">
+					
 						<input type="text" class="i_search" placeholder="검색어 입력" name="search_keyword">	
 						<button class="s_button">검색</button>
 					</span>
+					
 				</form>
 			</div>
 			<div class= "fr">
