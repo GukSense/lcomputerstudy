@@ -15,6 +15,7 @@ import com.lcomputerstudy.testmvc.service.BoardService;
 import com.lcomputerstudy.testmvc.service.UserService;
 import com.lcomputerstudy.testmvc.vo.Board;
 import com.lcomputerstudy.testmvc.vo.Pagination;
+import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
 
 
@@ -170,7 +171,10 @@ public class Controller extends HttpServlet {
 			case "/board-list.do":
 				boardService = new BoardService();
 				boardService = BoardService.getInstance();
-				boardList = BoardService.getBoardList();
+				Search search = new Search();
+				search.setSearch_target(request.getParameter("search_target"));
+				search.setSearch_keyword(request.getParameter("search_keyword"));
+				boardList = boardService.getBoardList(search);
 				
 				
 				view = "board/list";
@@ -256,6 +260,8 @@ public class Controller extends HttpServlet {
 				board.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				boardService.deleteBoard(board);
 				view = "board/deleteResult";	
+				break;
+			case "/board-search.do":
 				break;
 		}
 		

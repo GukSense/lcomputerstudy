@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Board;
+import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
 
 public class BoardDAO {
@@ -24,11 +25,34 @@ public class BoardDAO {
 		return dao;
 	}
 	
-	public ArrayList<Board> getBoardList() {	//게시물리스트
+	public ArrayList<Board> getBoardList(Search search) {	//게시물리스트
 		ArrayList<Board> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String where = "";
+		String column = search.getSearch_target();
+		String keyword = search.getSearch_keyword();
+		
+		if(search != null) {			
+			switch(column!= null ? column:"null") {
+				case"title":
+					where = "WHERE b_title LIKE ?";
+					break;
+				case"title_content":
+					where = "WHERE b_content LIKE ?";
+					break;
+				case"nick_name":
+					where = "WHERE b_writer LIKE ?";
+					break;
+				case "null":
+					where = "";
+					break;
+			}		
+		} 
+			
+		
+		
 		try {
 			String query = new StringBuilder()
 					.append("SELECT 	b_idx,\n")
@@ -46,13 +70,16 @@ public class BoardDAO {
 					.append("			b_order,\n")
 					.append("			b_depth\n")
 					.append("FROM 		board\n")
+					.append(where)
 					.append("ORDER BY  	b_group DESC , b_order ASC \n")
 					.toString(); 
 			
 			
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			
+			if (keyword != null) {
+				pstmt.setString(1, "%"+keyword+"%");
+			}
 			rs = pstmt.executeQuery();
 			
 			list = new ArrayList<Board>();

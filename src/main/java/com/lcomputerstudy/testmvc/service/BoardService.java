@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.lcomputerstudy.testmvc.dao.BoardDAO;
 import com.lcomputerstudy.testmvc.vo.Board;
+import com.lcomputerstudy.testmvc.vo.Search;
 
 public class BoardService {
 	private static BoardService service = null;
@@ -25,8 +26,8 @@ public class BoardService {
 		 dao.writingRegiStraion(board);
 	} 
 	
-	public static ArrayList<Board> getBoardList(){
-		return dao.getBoardList();
+	public ArrayList<Board> getBoardList(Search search){
+		return dao.getBoardList(search);
 	}
 	public Board viewContents(Board board) {
 		return dao.viewContents(board);

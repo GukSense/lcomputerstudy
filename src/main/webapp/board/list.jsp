@@ -25,7 +25,7 @@
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
 	.search{
-		display:flex;
+		
 	}
 	
 	.fl_search{
@@ -100,6 +100,7 @@
 			<td colspan="5" style="border:none; padding:10px 0px;" >
 		<div class="btm">
 			<div class="fl_search">
+				<form method="post" action="/lcomputerstudy/board-list.do" name="search">
 					<span class="select">
 						<select name="search_target">
 							<option value="title">제목</option>
@@ -108,8 +109,10 @@
 						</select>
 					</span>
 					<span class="search">
-						<input type="text" class="i_search" placeholder="검색어 입력">	<button class="s_button">검색</button>
+						<input type="text" class="i_search" placeholder="검색어 입력" name="search_keyword">	
+						<button class="s_button">검색</button>
 					</span>
+				</form>
 			</div>
 			<div class= "fr">
 					<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
