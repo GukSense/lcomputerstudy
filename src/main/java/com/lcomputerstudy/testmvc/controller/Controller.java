@@ -203,7 +203,7 @@ public class Controller extends HttpServlet {
 				board.setTitle(request.getParameter("board-title"));
 				board.setContent(request.getParameter("board-content"));
 				board.setUser((User)session.getAttribute("user"));
-				
+				board.setB_category(request.getParameter("category"));
 				boardService = BoardService.getInstance();
 				boardService.writingRegiStraion(board);
 				view = "board/registraion_result";

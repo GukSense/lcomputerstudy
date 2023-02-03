@@ -78,7 +78,8 @@ public class BoardDAO {
 					.append("					b_writer,\n")
 					.append("					b_group,\n")
 					.append("					b_order,\n")
-					.append("					b_depth\n")
+					.append("					b_depth,\n")
+					.append("					b_category\n")
 					.append("		FROM 		board\n")
 					.append(		where + "\n")
 					.append("		) ta\n")
@@ -113,6 +114,7 @@ public class BoardDAO {
 				board.setB_group(rs.getInt("b_group"));
 				board.setB_order(rs.getInt("b_order"));
 				board.setB_depth(rs.getInt("b_depth"));
+				board.setB_category(rs.getString("b_category"));
 				list.add(board);
 			}
 			
@@ -164,13 +166,14 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		User user = null;
 		try {
-			String query = "insert into board(b_title,b_content,b_date,b_writer,b_order,b_depth) values(?,?,NOW(),?,1,0) ";
+			String query = "insert into board(b_title,b_content,b_date,b_writer,b_order,b_depth,b_category) values(?,?,NOW(),?,1,0,?) ";
 			user = board.getUser();
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, user.getU_id());
+			pstmt.setString(4, board.getB_category());
 			pstmt.executeUpdate();
 			
 			pstmt.close();

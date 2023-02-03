@@ -12,8 +12,15 @@ public class Board {
 	private int b_group;
 	private int b_order;
 	private int b_depth;
+	private String b_category;
 	
 	
+	public String getB_category() {
+		return b_category;
+	}
+	public void setB_category(String b_category) {
+		this.b_category = b_category;
+	}
 	public int getB_depth() {
 		return b_depth;
 	}

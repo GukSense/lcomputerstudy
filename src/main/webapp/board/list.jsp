@@ -9,8 +9,8 @@
 <style>
 	a {
 		text-decoration: none; /* 링크의 밑줄 제거 */
-  		color: inherit; /* 링크의 색상 제거 */
-  		font-weight:700;
+  		color: #222222; /* 링크의 색상 제거 */
+  		font-weight:13px;
 	}
 	table {
 		border-collapse:collapse;
@@ -83,7 +83,9 @@
 		width:450px;
 		height:50px;
 		margin:10px auto;
-		text-align:center;
+		display: table;
+  		margin-left: auto;
+ 		margin-right: auto;
 					
 	}
 	li {	<!-- 페이지네이션 css-->
@@ -96,15 +98,41 @@
 		border-radius:5px;
 		display:inline;
 		background:#1b5ac2;
-		color:#black;
+		color:#ffffff;
+		text-align:center;
+	}
+	
+	.tab_menu{
+		display:flex;
+		justify-content:row;
+		height:45px;
+		background:#1b5ac2;
+	}
+	.tab_menu li {
+		padding-right:15px;
+		padding-left:15px;
+		border:none;
+		line-height:45px;	
 	}
 	
 </style>
 </head>
 <body>
+	<div>
+	</div>
 	<table>
+	<tr>
+		<td colspan="5" style="border:none; padding:10px 0px;">
+			<ul class ="tab_menu">
+				<li>lcomputer</li>
+				<li>개발</li>
+				<li>일상</li>
+				<li>질문</li>
+			</ul>
+		</td>
+	</tr>
 		<tr style="background:#1b5ac2; color=#ffffff;">
-			<th>제목</th>
+			<th>탭</th>
 			<th>내용</th>
 			<th>작성자</th>
 			<th>작성일시</th>
@@ -112,9 +140,8 @@
 		</tr>
 		<c:forEach items="${list}" var="board">
 			<tr>
-				<td><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">${board.title }</a></td>
-				
-				<td class= "td_contents">${board.content }</td>
+				<td>${board.b_category}</td>				
+				<td class= "td_contents"><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">${board.title }</a></td>
 				<td>${board.writer} </td>
 				<td>${board.date }</td>
 				<td>${board.hits }</td>
@@ -160,7 +187,7 @@
 				<c:choose>
 					<c:when test="${ pagination.page == i}">
 						
-						<li style="background-color:#ededed;">
+						<li style="background-color:#ededed; color:black;">
 							<span>${i}</span>
 						</li>
 					</c:when>
