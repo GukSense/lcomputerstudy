@@ -2,6 +2,7 @@ package com.lcomputerstudy.testmvc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class Controller extends HttpServlet {
 		
 		BoardService boardService = null;
 		Board board = null;
-		ArrayList<Board> boardList = null;
+		List<Board> boardList = null;
 		int page = 1;
 		int count = 0;
 		int hits = 0;
@@ -67,7 +68,7 @@ public class Controller extends HttpServlet {
 				pagination.setPage(page);
 				pagination.setCount(count);
 				pagination.init();
-				ArrayList<User> list = userService.getUsers(pagination);
+				List<User> list = userService.getUsers(pagination);
 				
 				
 				request.setAttribute("list", list);
@@ -174,12 +175,24 @@ public class Controller extends HttpServlet {
 				Search search = new Search();
 				search.setSearch_target(request.getParameter("search_target"));
 				search.setSearch_keyword(request.getParameter("search_keyword"));
-				boardList = boardService.getBoardList(search);
 				
+				String temPage = request.getParameter("page");
+				if(temPage != null) {
+					page = Integer.parseInt(temPage);
+				}
+				count = boardService.getBoardCount();
+				Pagination pagi = new Pagination();
+				pagi.setCount(count);
+				pagi.setPage(page);
+				pagi.setSearch(search);
+				pagi.init();
 				
-				view = "board/list";
+				boardList = boardService.getBoardList(pagi);
+				
 				request.setAttribute("list", boardList);
-				
+				request.setAttribute("pagination", pagi);
+
+				view = "board/list";
 				break;
 			case "/board-registration.do":
 				view = "board/registration";
@@ -261,8 +274,7 @@ public class Controller extends HttpServlet {
 				boardService.deleteBoard(board);
 				view = "board/deleteResult";	
 				break;
-			case "/board-search.do":
-				break;
+			
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher(view + ".jsp");

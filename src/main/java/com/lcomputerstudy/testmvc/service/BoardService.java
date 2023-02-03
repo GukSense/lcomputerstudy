@@ -1,10 +1,10 @@
 package com.lcomputerstudy.testmvc.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.lcomputerstudy.testmvc.dao.BoardDAO;
 import com.lcomputerstudy.testmvc.vo.Board;
-import com.lcomputerstudy.testmvc.vo.Search;
+import com.lcomputerstudy.testmvc.vo.Pagination;
 
 public class BoardService {
 	private static BoardService service = null;
@@ -26,8 +26,8 @@ public class BoardService {
 		 dao.writingRegiStraion(board);
 	} 
 	
-	public ArrayList<Board> getBoardList(Search search){
-		return dao.getBoardList(search);
+	public List<Board> getBoardList(Pagination pagination){
+		return dao.getBoardList(pagination);
 	}
 	public Board viewContents(Board board) {
 		return dao.viewContents(board);
@@ -44,7 +44,8 @@ public class BoardService {
 	public void replyBoard(Board board) {
 		dao.replyBoard(board);
 	}
-//	public void replyOrderIncre(Board board) {
-//		dao.replyOrderIncre(board);
-//	}
+	public int getBoardCount() {
+		return dao.getBoardCount();
+	}
+
 }

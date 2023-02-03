@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Board;
+import com.lcomputerstudy.testmvc.vo.Pagination;
 import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
 
@@ -25,15 +27,19 @@ public class BoardDAO {
 		return dao;
 	}
 	
-	public ArrayList<Board> getBoardList(Search search) {	//게시물리스트
-		ArrayList<Board> list = null;
+	public List<Board> getBoardList(Pagination pagination) {	//게시물리스트
+		List<Board> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		Search search = pagination.getSearch();
 		String where = "";
-		String column = search.getSearch_target();
-		String keyword = search.getSearch_keyword();
-		
+		String column = pagination.getSearch().getSearch_target();
+		String keyword = pagination.getSearch().getSearch_keyword();
+		int pageNum = pagination.getPageNum();
+		//String column = search.getSearch_target();
+		//String keyword = search.getSearch_keyword();
+	
 		if(search != null) {			
 			switch(column!= null ? column:"null") {
 				case"title":
@@ -55,23 +61,30 @@ public class BoardDAO {
 		
 		try {
 			String query = new StringBuilder()
-					.append("SELECT 	b_idx,\n")
-					.append("		 	b_title,\n")
-					.append("			b_content,\n")
-					.append("			(\n")
-					.append("			CASE 	WHEN 	(DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(b_date,'%Y-%m-%d'))\n")
-					.append("			THEN	(DATE_FORMAT(b_date,'%H:%i'))\n")
-					.append("			ELSE 	(DATE_FORMAT(b_date,'%Y-%m-%d'))\n")
-					.append("			END\n")
-					.append("			) AS b_date,\n")
-					.append("			b_hits,\n")
-					.append("			b_writer,\n")
-					.append("			b_group,\n")
-					.append("			b_order,\n")
-					.append("			b_depth\n")
-					.append("FROM 		board\n")
-					.append(where)
+					.append("SELECT @ROWNUM := @ROWNUM -1 AS ROWNUM,\n")
+					.append("		ta.*\n")
+					.append("FROM\n")
+					.append("		(\n")
+					.append("			SELECT	(\n")
+					.append("					CASE 	WHEN 	(DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(b_date,'%Y-%m-%d'))\n")
+					.append("					THEN	(DATE_FORMAT(b_date,'%H:%i'))\n")
+					.append("					ELSE 	(DATE_FORMAT(b_date,'%Y-%m-%d'))\n")
+					.append("					END\n")
+					.append("					) AS b_date,\n")
+					.append("		 			b_idx,\n")
+					.append("		 			b_title,\n")
+					.append("					b_content,\n")
+					.append("					b_hits,\n")
+					.append("					b_writer,\n")
+					.append("					b_group,\n")
+					.append("					b_order,\n")
+					.append("					b_depth\n")
+					.append("		FROM 		board\n")
+					.append(		where + "\n")
+					.append("		) ta\n")
+					.append("INNER JOIN (SELECT @rownum := (SELECT COUNT(*)-?+1 FROM board ta)) tb ON 1=1\n")
 					.append("ORDER BY  	b_group DESC , b_order ASC \n")
+					.append("LIMIT ?,?")
 					.toString(); 
 			
 			
@@ -79,9 +92,15 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(query);
 			if (keyword != null) {
 				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, pageNum);
+				pstmt.setInt(3, pageNum);
+				pstmt.setInt(4, Pagination.perPage);
+			} else if(keyword == null){
+				pstmt.setInt(1, pageNum);
+				pstmt.setInt(2, pageNum);
+				pstmt.setInt(3, Pagination.perPage);				
 			}
 			rs = pstmt.executeQuery();
-			
 			list = new ArrayList<Board>();
 			while(rs.next()) {
 				Board board = new Board();
@@ -111,7 +130,32 @@ public class BoardDAO {
 		
 		return list; 
 	}
-	
+	public int getBoardCount() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String query = "SELECT COUNT(*)AS count FROM board";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+			count = rs.getInt("count");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if (rs != null) rs.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	
 	
 	public void writingRegiStraion(Board board) {	//글등록
@@ -160,7 +204,6 @@ public class BoardDAO {
 					.toString();			
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			String s = "RE:";
 			pstmt.setString(1, board.getTitle());
 			pstmt.setString(2, board.getContent());
 			pstmt.setString(3, user.getU_id());
@@ -190,36 +233,7 @@ public class BoardDAO {
 		
 		
 	}
-//	public void replyOrderIncre(Board board) {
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		
-//		try {
-//			String query = "UPDATE 	board\n" + 
-//							"SET 	b_order =\n" + 
-//							"CASE 	WHEN b_order > ? THEN b_order = ? +1\n" + 
-//							"ELSE 	b_order\n" + 
-//							"END	\n" + 
-//							"WHERE 	b_group = b_group=? AND b_depth >=1";
-//			conn = DBConnection.getConnection();
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, board.getB_order());
-//			pstmt.setInt(2, board.getB_order());
-//			pstmt.setInt(3, board.getB_group());
-//			
-//			pstmt.executeUpdate();			
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if(conn != null) {conn.close();}
-//				if(pstmt != null) {pstmt.close();}
-//			} catch(SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//	}
+
 	public Board viewContents(Board board) {	//컨텐츠보기
 		Board b = null;
 		String idx = Integer.toString(board.getB_idx());

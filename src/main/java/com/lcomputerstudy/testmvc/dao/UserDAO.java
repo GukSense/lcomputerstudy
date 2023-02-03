@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Pagination;
@@ -25,12 +26,12 @@ public class UserDAO {
 		return dao;
 	}
 	
-	public ArrayList<User> getUsers(Pagination pagination){
+	public List<User> getUsers(Pagination pagination){
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			ArrayList<User> list = null;
+			List<User> list = null;
 			int pageNum = pagination.getPageNum();
 			
 			try {

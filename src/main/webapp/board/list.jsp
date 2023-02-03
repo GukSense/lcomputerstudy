@@ -10,6 +10,7 @@
 	a {
 		text-decoration: none; /* 링크의 밑줄 제거 */
   		color: inherit; /* 링크의 색상 제거 */
+  		font-weight:700;
 	}
 	table {
 		border-collapse:collapse;
@@ -27,10 +28,6 @@
 	    float:left;
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
-	.search{
-		
-	}
-	
 	.fl_search{
 		height: 40px;
 		width: 460px;
@@ -82,6 +79,25 @@
 		justify-content: space-between;
 		clear:both;
 	}
+	ul {	<!-- 페이지네이션 css-->
+		width:450px;
+		height:50px;
+		margin:10px auto;
+		text-align:center;
+					
+	}
+	li {	<!-- 페이지네이션 css-->
+		list-style:none;
+		width:50px;
+		line-height:50px;
+		border:1px solid #ededed;
+		float:left;
+		margin:0 5px;
+		border-radius:5px;
+		display:inline;
+		background:#1b5ac2;
+		color:#black;
+	}
 	
 </style>
 </head>
@@ -128,8 +144,42 @@
 		</div>
 		</tr>
 	</table>
-	
-	
+<!--페이지네이션-->
+	<div>
+		<ul>
+			<c:choose>
+				<c:when test="${pagination.startPage > 5}">
+					<li>
+						<a href="board-list.do?page=${pagination.prevPage }">
+							◀
+						</a>
+					</li>
+				</c:when>
+			</c:choose>
+			<c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+				<c:choose>
+					<c:when test="${ pagination.page == i}">
+						
+						<li style="background-color:#ededed;">
+							<span>${i}</span>
+						</li>
+					</c:when>
+					<c:when test="${pagination.page != i }">
+						<li>
+							<a href="board-list.do?page=${i}">${i}</a>
+						</li>
+					</c:when>				
+				</c:choose>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${ pagination.nextPage < pagination.lastPage }">
+					<li style="display:inlien;">
+						<a href ="board-list.do?page=${pagination.nextPage }">▶</a>
+					</li>
+				</c:when>
+			</c:choose>
+		</ul>
+	</div>
 	
 </body>
 </html>

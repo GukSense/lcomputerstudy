@@ -1,6 +1,6 @@
 package com.lcomputerstudy.testmvc.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.lcomputerstudy.testmvc.dao.UserDAO;
 import com.lcomputerstudy.testmvc.vo.Pagination;
@@ -42,7 +42,7 @@ public class UserService {
 	public int getUsersCount() {
 		return dao.getUsersCount();
 	}
-	public ArrayList<User> getUsers(Pagination pagination) {
+	public List<User> getUsers(Pagination pagination) {
 		return dao.getUsers(pagination);
 	}
 	public User loginUser(String idx, String pw) {

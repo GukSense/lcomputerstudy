@@ -10,8 +10,12 @@ public class Pagination {
 	int prevPage;		// pagination의 이전 목록
 	int nextPage;		// pagination의 다음 목록 
 	public static final int pageUnit =5;
-	public static final int perPage =3;
+	public static final int perPage =10;
+	private Search search;
 	
+	
+	
+
 	public Pagination() {
 		
 	}
@@ -27,6 +31,13 @@ public class Pagination {
 	}
 
 	
+	public Search getSearch() {
+		return search;
+	}
+	
+	public void setSearch(Search search) {
+		this.search = search;
+	}
 	public int getCount() {
 		return count;
 	}
