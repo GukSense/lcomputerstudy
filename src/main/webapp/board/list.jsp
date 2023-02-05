@@ -22,10 +22,10 @@
 		width:200px;
 		text-align:center;
 	}
-	table .td_contents {
-		test-align:left;
+	.td_title {
 		width:800px;
-	    float:left;
+	    text-align:left;
+	    text-indent:10px;
   		overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 	}
 	.fl_search{
@@ -118,22 +118,23 @@
 </style>
 </head>
 <body>
-	<div>
+	<div class="logo">
+		<img >
 	</div>
 	<table>
 	<tr>
 		<td colspan="5" style="border:none; padding:10px 0px;">
 			<ul class ="tab_menu">
-				<li>lcomputer</li>
-				<li>개발</li>
-				<li>일상</li>
-				<li>질문</li>
+				<li><a href="/lcomputerstudy/board-list.do?category=${board.setB_category("lcomputer") }" style="color:#ffffff;">lcomputer</a></li>
+				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">개발</a></li>
+				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">일상</a></li>
+				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">질문</a></li>
 			</ul>
 		</td>
 	</tr>
 		<tr style="background:#1b5ac2; color=#ffffff;">
 			<th>탭</th>
-			<th>내용</th>
+			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일시</th>
 			<th>조회수</th>
@@ -141,7 +142,7 @@
 		<c:forEach items="${list}" var="board">
 			<tr>
 				<td>${board.b_category}</td>				
-				<td class= "td_contents"><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">${board.title }</a></td>
+				<td class= "td_title"><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">${board.title }</a></td>
 				<td>${board.writer} </td>
 				<td>${board.date }</td>
 				<td>${board.hits }</td>
@@ -153,7 +154,7 @@
 			<div class="fl_search">
 				<form method="post" action="/lcomputerstudy/board-list.do" name="search">
 					<span class="select">
-						<select class ="select_t" name="search_target">
+						<select class ="select_t" name="search_target" >
 							<option value="title">제목</option>
 							<option value="title_content">내용</option>
 							<option value="nick_name">작성자</option>
