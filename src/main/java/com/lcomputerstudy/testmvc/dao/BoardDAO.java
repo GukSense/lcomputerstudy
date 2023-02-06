@@ -33,13 +33,34 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Search search = pagination.getSearch();
-		String where = "";
+		String category = pagination.getSearch().getSearch_category();
 		String column = pagination.getSearch().getSearch_target();
 		String keyword = pagination.getSearch().getSearch_keyword();
+		String where = "";
 		int pageNum = pagination.getPageNum();
-		//String column = search.getSearch_target();
-		//String keyword = search.getSearch_keyword();
-	
+		category="없음";
+
+		if(search!=null) {
+			switch(category !=null ? category:"null") {
+				case"lcomputer":
+					where = "b_category =?";
+					break;
+				case"개발":
+					where = "b_category =?";
+					break;
+				case"일상":
+					where = "b_category =?";
+					break;
+				case"질문":
+					where = "b_category =?";
+					break;
+				case"null":
+					where = "";
+					break;
+			}
+		}
+		
+		
 		if(search != null) {			
 			switch(column!= null ? column:"null") {
 				case"title":
@@ -97,10 +118,16 @@ public class BoardDAO {
 				pstmt.setInt(3, pageNum);
 				pstmt.setInt(4, Pagination.perPage);
 			} else if(keyword == null){
+				if (category!=null) {
+					pstmt.setString(1, category);
+					pstmt.setInt(2, pageNum);
+					pstmt.setInt(3, Pagination.perPage);
+				} else {
 				pstmt.setInt(1, pageNum);
 				pstmt.setInt(2, pageNum);
 				pstmt.setInt(3, Pagination.perPage);				
-			}
+				}
+			} 
 			rs = pstmt.executeQuery();
 			list = new ArrayList<Board>();
 			while(rs.next()) {

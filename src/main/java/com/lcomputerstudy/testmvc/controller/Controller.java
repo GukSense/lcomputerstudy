@@ -175,7 +175,7 @@ public class Controller extends HttpServlet {
 				Search search = new Search();
 				search.setSearch_target(request.getParameter("search_target"));
 				search.setSearch_keyword(request.getParameter("search_keyword"));
-				
+				search.setSearch_category(request.getParameter("category"));
 				String temPage = request.getParameter("page");
 				if(temPage != null) {
 					page = Integer.parseInt(temPage);

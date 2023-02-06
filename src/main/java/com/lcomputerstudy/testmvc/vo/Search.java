@@ -3,8 +3,15 @@ package com.lcomputerstudy.testmvc.vo;
 public class Search {
 	private String search_target;
 	private String search_keyword;
+	private String search_category;
 	
 	
+	public String getSearch_category() {
+		return search_category;
+	}
+	public void setSearch_category(String search_category) {
+		this.search_category = search_category;
+	}
 	public String getSearch_target() {
 		return search_target;
 	}

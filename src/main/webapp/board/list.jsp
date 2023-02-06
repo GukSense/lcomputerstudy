@@ -118,6 +118,7 @@
 </style>
 </head>
 <body>
+
 	<div class="logo">
 		<img >
 	</div>
@@ -125,10 +126,10 @@
 	<tr>
 		<td colspan="5" style="border:none; padding:10px 0px;">
 			<ul class ="tab_menu">
-				<li><a href="/lcomputerstudy/board-list.do?category=${board.setB_category("lcomputer") }" style="color:#ffffff;">lcomputer</a></li>
-				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">개발</a></li>
-				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">일상</a></li>
-				<li><a href="/lcomputerstudy/board-list.do" style="color:#ffffff;">질문</a></li>
+				<li><a href="/lcomputerstudy/board-list.do?category=lcomputer" style="color:#ffffff;">lcomputer</a></li>
+				<li><a href="/lcomputerstudy/board-list.do?category=개발" style="color:#ffffff;">개발</a></li>
+				<li><a href="/lcomputerstudy/board-list.do?category=일상" style="color:#ffffff;">일상</a></li>
+				<li><a href="/lcomputerstudy/board-list.do?category=질문" style="color:#ffffff;">질문</a></li>
 			</ul>
 		</td>
 	</tr>
@@ -152,7 +153,8 @@
 			<td colspan="5" style="border:none; padding:10px 0px;" >
 		<div class="btm">
 			<div class="fl_search">
-				<form method="post" action="/lcomputerstudy/board-list.do" name="search">
+				<form method="get" action="/lcomputerstudy/board-list.do" name="search">
+					<input type="hidden" name="category" value="${pagination.search.search_category }">
 					<span class="select">
 						<select class ="select_t" name="search_target" >
 							<option value="title">제목</option>

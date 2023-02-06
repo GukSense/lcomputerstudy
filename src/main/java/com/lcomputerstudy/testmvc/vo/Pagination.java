@@ -106,5 +106,12 @@ public class Pagination {
 		return perPage;
 	}
 
+	@Override
+	public String toString() {
+		return "Pagination [count=" + count + ", page=" + page + ", pageNum=" + pageNum + ", startPage=" + startPage
+				+ ", endPage=" + endPage + ", lastPage=" + lastPage + ", prevPage=" + prevPage + ", nextPage="
+				+ nextPage + ", search=" + search + "]";
+	}
+
 	
 }
