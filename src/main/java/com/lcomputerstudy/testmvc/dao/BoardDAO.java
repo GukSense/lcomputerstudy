@@ -38,45 +38,41 @@ public class BoardDAO {
 		String keyword = pagination.getSearch().getSearch_keyword();
 		String where = "";
 		int pageNum = pagination.getPageNum();
-		category="없음";
 
 		if(search!=null) {
-			switch(category !=null ? category:"null") {
+			switch(category !=null ? category:"") {
 				case"lcomputer":
-					where = "b_category =?";
+					where = "WHERE b_category =?";
+					if(column!=null)	// 탭 필터링 상태에서 검색했을때 구현할 메서드
+						where = search.FilterIfHaveBoth(column);
 					break;
 				case"개발":
-					where = "b_category =?";
+					where = "WHERE b_category =?";
+					if(column!=null)
+						where = search.FilterIfHaveBoth(column);
 					break;
 				case"일상":
-					where = "b_category =?";
+					where = "WHERE b_category =?";
+					if(column!=null)
+						where = search.FilterIfHaveBoth(column);
 					break;
 				case"질문":
-					where = "b_category =?";
+					where = "WHERE b_category =?";
+					if(column!=null)
+						where = search.FilterIfHaveBoth(column);
 					break;
-				case"null":
+				case"":
 					where = "";
-					break;
+					if(column!=null)	// 카테고리가x 일때 검색기능
+						where = search.FilterHaveOnlyOne(column);
+					break;		
 			}
+			
+					
 		}
 		
 		
-		if(search != null) {			
-			switch(column!= null ? column:"null") {
-				case"title":
-					where = "WHERE b_title LIKE ?";
-					break;
-				case"title_content":
-					where = "WHERE b_content LIKE ?";
-					break;
-				case"nick_name":
-					where = "WHERE b_writer LIKE ?";
-					break;
-				case "null":
-					where = "";
-					break;
-			}		
-		} 
+		
 			
 		
 		
@@ -121,7 +117,8 @@ public class BoardDAO {
 				if (category!=null) {
 					pstmt.setString(1, category);
 					pstmt.setInt(2, pageNum);
-					pstmt.setInt(3, Pagination.perPage);
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, Pagination.perPage);
 				} else {
 				pstmt.setInt(1, pageNum);
 				pstmt.setInt(2, pageNum);

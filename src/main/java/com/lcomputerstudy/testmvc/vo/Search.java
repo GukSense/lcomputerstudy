@@ -5,6 +5,44 @@ public class Search {
 	private String search_keyword;
 	private String search_category;
 	
+	public String FilterIfHaveBoth(String column) {
+		String where ="";
+		
+		switch(column) {
+		case"title":
+			where = "WHERE b_title LIKE ? AND b_category =?";
+			break;
+		case"title_content":
+			where = "WHERE b_content LIKE ? AND b_category =?";
+			break;
+		case"nick_name":
+			where = "WHERE b_writer LIKE ? AND b_category =?";
+			break;
+		}
+	
+		return where;
+	}
+	
+	public String FilterHaveOnlyOne(String column) {
+		String where ="";
+		
+		switch(column!= null ? column:"null") {
+		case"title":
+			where = "WHERE b_title LIKE ?";
+			break;
+		case"title_content":
+			where = "WHERE b_content LIKE ?";
+			break;
+		case"nick_name":
+			where = "WHERE b_writer LIKE ?";
+			break;
+		case "null":
+			where = "";
+			break;
+		}	
+		return where;
+	}
+	
 	
 	public String getSearch_category() {
 		return search_category;
