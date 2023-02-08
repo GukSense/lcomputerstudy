@@ -1,6 +1,7 @@
 package com.lcomputerstudy.testmvc.service;
 
 import com.lcomputerstudy.testmvc.dao.CommentDAO;
+import com.lcomputerstudy.testmvc.vo.Comment;
 
 public class CommentService {
 	private static CommentService service = null;
@@ -15,5 +16,9 @@ public class CommentService {
 			dao = CommentDAO.getInstance();
 		}
 		return service;
+	}
+	
+	public void commentRegistration(Comment comment) {
+		dao.commentRegistration(comment);
 	}
 }

@@ -278,19 +278,23 @@ public class Controller extends HttpServlet {
 				view = "board/deleteResult";	
 				break;
 //		댓글 comment	-------------------------------------------------------------
+			case"/comment-list.do":
 				
-			
-			
-			
-			
+				break;
+				
+				
 			case"/comment-regi.do":
 				comment = new Comment();
+				session = request.getSession();
 				commentService = CommentService.getInstance();
-				comment.setContent();
-				comment.setId();
-				comment.setDate();
-				comment.setComment_board();
 				
+				comment.setId((User)session.getAttribute("user"));
+				comment.setContent(request.getParameter("content"));
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				commentService.commentRegistration(comment);
+				
+				request.setAttribute("comment", comment);
+				//view = "board/content";
 				break;
 				
 		}
