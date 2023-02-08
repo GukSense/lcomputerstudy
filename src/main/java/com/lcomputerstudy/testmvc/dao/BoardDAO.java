@@ -42,8 +42,8 @@ public class BoardDAO {
 		if(search!=null) {
 			switch(category !=null ? category:"") {
 				case"lcomputer":
-					where = "WHERE b_category =?";
-					if(column!=null)	// 탭 필터링 상태에서 검색했을때 구현할 메서드
+					where = "WHERE b_category =?";	// 탭 필터링만 on
+					if(column!=null)	// 탭 필터링 on 검색on 둘다 구현할 메서드
 						where = search.FilterIfHaveBoth(column);
 					break;
 				case"개발":
@@ -62,8 +62,8 @@ public class BoardDAO {
 						where = search.FilterIfHaveBoth(column);
 					break;
 				case"":
-					where = "";
-					if(column!=null)	// 카테고리가x 일때 검색기능
+					where = "";	//카테고리 && 검색 모두 x
+					if(column!=null)	// 카테고리가x  검색기능만 on 일때 구현될 메서드
 						where = search.FilterHaveOnlyOne(column);
 					break;		
 			}
@@ -109,11 +109,18 @@ public class BoardDAO {
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
 			if (keyword != null) {
+				if (category !=null) {
+					pstmt.setString(1, "%"+keyword+"%");
+					pstmt.setString(2, category);
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, pageNum);
+					pstmt.setInt(5, Pagination.perPage);					
+				} else {
 				pstmt.setString(1, "%"+keyword+"%");
 				pstmt.setInt(2, pageNum);
 				pstmt.setInt(3, pageNum);
 				pstmt.setInt(4, Pagination.perPage);
-			} else if(keyword == null){
+				}} else if(keyword == null){
 				if (category!=null) {
 					pstmt.setString(1, category);
 					pstmt.setInt(2, pageNum);

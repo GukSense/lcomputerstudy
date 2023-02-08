@@ -1,7 +1,6 @@
 package com.lcomputerstudy.testmvc.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.lcomputerstudy.testmvc.service.BoardService;
+import com.lcomputerstudy.testmvc.service.CommentService;
 import com.lcomputerstudy.testmvc.service.UserService;
 import com.lcomputerstudy.testmvc.vo.Board;
+import com.lcomputerstudy.testmvc.vo.Comment;
 import com.lcomputerstudy.testmvc.vo.Pagination;
 import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
@@ -49,6 +50,8 @@ public class Controller extends HttpServlet {
 		String idx = null;
 		String pw = null;
 		
+		Comment comment = null;
+		CommentService commentService = null;
 		HttpSession session = null;
 		
 		command = checkSession(request, response, command);
@@ -274,7 +277,22 @@ public class Controller extends HttpServlet {
 				boardService.deleteBoard(board);
 				view = "board/deleteResult";	
 				break;
+//		댓글 comment	-------------------------------------------------------------
+				
 			
+			
+			
+			
+			case"/comment-regi.do":
+				comment = new Comment();
+				commentService = CommentService.getInstance();
+				comment.setContent();
+				comment.setId();
+				comment.setDate();
+				comment.setComment_board();
+				
+				break;
+				
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher(view + ".jsp");
