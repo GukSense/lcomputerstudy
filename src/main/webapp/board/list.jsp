@@ -120,7 +120,8 @@
 <body>
 
 	<div class="logo">
-		<img >
+		<a href="/lcomputerstudy/board-list.do"><img src="C:\Users\강국\Documents\workspace-spring-tool-suite-4-4.7.0.RELEASE\workspace\lcomputerstudy\src\main\webapp\img\logo_title.jpg" alt=""></a>
+		<a href="/lcomputerstudy/board-list.do"><img src="C:\Users\강국\Documents\workspace-spring-tool-suite-4-4.7.0.RELEASE\workspace\lcomputerstudy\src\main\webapp\img\logo.jpg" alt=""></a>
 	</div>
 	<table>
 	<tr>

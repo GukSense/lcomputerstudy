@@ -2,6 +2,7 @@
     <wb-module deploy-name="lcomputerstudy">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/img"/>
         <property name="context-root" value="lcomputerstudy"/>
         <property name="java-output-path" value="/lcomputerstudy/build/classes"/>
     </wb-module>

@@ -22,7 +22,7 @@ public class CommentDAO {
 		}
 		return dao;
 	}
-	public List getCommentList() {
+	public List<Comment> getCommentList() {
 		List<Comment> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

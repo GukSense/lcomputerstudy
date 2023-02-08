@@ -1,5 +1,7 @@
 package com.lcomputerstudy.testmvc.service;
 
+import java.util.List;
+
 import com.lcomputerstudy.testmvc.dao.CommentDAO;
 import com.lcomputerstudy.testmvc.vo.Comment;
 
@@ -17,7 +19,9 @@ public class CommentService {
 		}
 		return service;
 	}
-	
+	public List<Comment> getCommentList() {
+		return dao.getCommentList();
+	}
 	public void commentRegistration(Comment comment) {
 		dao.commentRegistration(comment);
 	}

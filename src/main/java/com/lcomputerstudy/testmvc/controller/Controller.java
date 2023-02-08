@@ -246,9 +246,12 @@ public class Controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				boardService.hitsBoard(board);
 				board = boardService.viewContents(board);
-			
+				
+				commentService = CommentService.getInstance();	//comment
+				List<Comment> commentList = commentService.getCommentList();
 				view = "board/contents";
 				
+				request.setAttribute("list", commentList);
 				request.setAttribute("board", board);
 				request.setAttribute("hits", hits);
 				break;
@@ -278,9 +281,6 @@ public class Controller extends HttpServlet {
 				view = "board/deleteResult";	
 				break;
 //		댓글 comment	-------------------------------------------------------------
-			case"/comment-list.do":
-				
-				break;
 				
 				
 			case"/comment-regi.do":
@@ -294,7 +294,7 @@ public class Controller extends HttpServlet {
 				commentService.commentRegistration(comment);
 				
 				request.setAttribute("comment", comment);
-				//view = "board/content";
+				view = "board/replyResult";
 				break;
 				
 		}
