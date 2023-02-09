@@ -14,7 +14,8 @@
 	}
 	table {
 		border-collapse:collapse;
-		margin:40px auto
+		margin:40px auto;
+		margin-top:0px;
 	}
 	
 	table tr th, table tr td {
@@ -114,14 +115,17 @@
 		border:none;
 		line-height:45px;	
 	}
+	.logo {
+		text-align:center;
+	}
 	
 </style>
 </head>
 <body>
 
 	<div class="logo">
-		<a href="/lcomputerstudy/board-list.do"><img src="C:\Users\강국\Documents\workspace-spring-tool-suite-4-4.7.0.RELEASE\workspace\lcomputerstudy\src\main\webapp\img\logo_title.jpg" alt=""></a>
-		<a href="/lcomputerstudy/board-list.do"><img src="C:\Users\강국\Documents\workspace-spring-tool-suite-4-4.7.0.RELEASE\workspace\lcomputerstudy\src\main\webapp\img\logo.jpg" alt=""></a>
+		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo.jpg" alt="" style="width:150px; height:70px;"></a>
+		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo_title.jpg" alt="" style="width:400px; height:70px;"></a>
 	</div>
 	<table>
 	<tr>

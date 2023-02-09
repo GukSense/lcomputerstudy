@@ -40,6 +40,7 @@ public class CommentDAO {
 				comment.setWriter(rs.getString("comment_id"));
 				comment.setDate(rs.getString("comment_date"));
 				comment.setContent(rs.getString("comment_content"));
+				comment.setB_idx(rs.getInt("comment_board"));
 				list.add(comment);
 			}
 		} catch(Exception e) {
@@ -85,4 +86,49 @@ public class CommentDAO {
 		}
 		
 	}
+
+	public void deleteComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			String query = "DELETE FROM comment WHERE comment_num=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, comment.getComment_num());
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void editComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = "UPDATE comment SET comment_content=? WHERE comment_num=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, query);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt !=null ) pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	} 
+
 }

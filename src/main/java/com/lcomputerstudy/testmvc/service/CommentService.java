@@ -25,4 +25,10 @@ public class CommentService {
 	public void commentRegistration(Comment comment) {
 		dao.commentRegistration(comment);
 	}
+	public void deleteComment(Comment comment) {
+		dao.deleteComment(comment);
+	}
+	public void editComment(Comment comment) {
+		dao.editComment(comment);
+	}
 }

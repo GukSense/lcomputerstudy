@@ -7,7 +7,6 @@
 <title>답글완료</title>
 </head>
 <body>
-	<a href="/lcomputerstudy/board-list.do">답글작성완료: 돌아가기</a>
-	<a href="/lcomputerstudy/comment-list.do">댓글작성완료: 돌아가기</a>
+	<a href="/lcomputerstudy/board-list.do">돌아가기</a>
 </body>
 </html>

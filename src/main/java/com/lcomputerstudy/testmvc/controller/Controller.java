@@ -296,6 +296,26 @@ public class Controller extends HttpServlet {
 				request.setAttribute("comment", comment);
 				view = "board/replyResult";
 				break;
+			case"/comment-delete.do":
+				comment = new Comment();
+				comment.setComment_num(Integer.parseInt(request.getParameter("comment_num")));
+				commentService = CommentService.getInstance();
+				commentService.deleteComment(comment);
+				
+				view ="board/replyResult";
+				
+				break;
+				
+			case"/comment-edit.do":
+				comment = new Comment();
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment.setComment_num(Integer.parseInt(request.getParameter("comment_num")));
+				
+				commentService = CommentService.getInstance();
+				
+				
+				
+				
 				
 		}
 		

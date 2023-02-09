@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <title>글 내용</title>
 	<style>
 		li {
@@ -32,16 +33,30 @@
 	<div>
 		<div></div>
 		<ul>
+			<c:forEach items="${list}" var="comment">
 			<li>
-				<div></div>
-				<div><c:forEach items="${list}" var="comment">${comment.content }</c:forEach></div>
+				<div>
+					<a>id</a>
+					<span>~전</span>
+				</div>
+				<div>${comment.content }</div>
 				<div>
 					<span></span>
-					<a></a>
-					<a></a>
-					<a></a>
+					<!--  <a href="/lcomputerstudy/comment-edit.do?comment_num=${comment.comment_num }&b_idx=${comment.b_idx}">수정</a> -->
+					<button type="button" class="btnUpdateForm">수정</button>
+					<a href="/lcomputerstudy/comment-delete.do?comment_num=${comment.comment_num }">삭제</a>
+					<a>답글</a>
+					<br>-----------------
 				</div>
 			</li>
+			<li style="display: none;">
+				<div>
+					<textarea rows="3" cols="80" style="resize:none"></textarea>
+					<button type="button" class="btnUpdate">등록</button>
+					<button type="button">취소</button>
+				</div>
+			</li>
+			</c:forEach>
 		</ul>
 	</div>
 	
@@ -62,5 +77,25 @@
 		</form>
 	</div>
 	
+<script>
+$(document).on('click', '.btnUpdateForm', function () {
+	console.log('클릭');
+	$(this).parent().parent().next().css('display', '');
+});
+/*
+$(document).on('click', '.btnUpdate', function () {
+	let contents = $(this).prev().val();
+	let cno = $(this).attr('cno');
+	$.ajax({
+		  method: "POST",
+		  url: "comment/update.do",
+		  data: { comment: contents, c_no: cno}
+		})
+	  .done(function( msg ) {
+	    alert( "Data Saved: " + msg );
+	  });
+});
+*/
+</script>
 </body>
 </html>
