@@ -34,7 +34,7 @@
 		<div></div>
 		<ul id="commentList">
 			<c:forEach items="${list}" var="comment">
-			<li>
+			<li id="comment_a">
 				<div>
 					<a>id</a>
 					<span>~전</span>
@@ -42,9 +42,9 @@
 				<div>${comment.content }</div>
 				<div>
 					<span></span>
-					<!--  <a href="/lcomputerstudy/comment-edit.do?comment_num=${comment.comment_num }&b_idx=${comment.b_idx}">수정</a> -->
 					<button type="button" class="btnUpdateForm">수정</button>
-					<a href="/lcomputerstudy/comment-delete.do?comment_num=${comment.comment_num }">삭제</a>
+					<!--<a href="/lcomputerstudy/comment-delete.do?comment_num=${comment.comment_num }">삭제</a>-->
+					<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
 					<a>답글</a>
 					<br>-----------------
 				</div>
@@ -53,7 +53,7 @@
 				<div>
 					<textarea rows="3" cols="80" style="resize:none"></textarea>
 					<button type="button" class="btnUpdate" cno="${comment.comment_num}">등록</button>
-					<button type="button">취소</button>
+					<button type="button" class="btnCancel">취소</button>
 				</div>
 			</li>
 			</c:forEach>
@@ -78,12 +78,16 @@
 	</div>
 	
 <script>
-$(document).on('click', '.btnUpdateForm', function () {
+$(document).on('click', '.btnUpdateForm', function () {	//수정 폼 버튼 
 	console.log('클릭');
 	$(this).parent().parent().next().css('display', '');
 });
+$(document).on('click', '.btnCancel', function() {	// 수정 폼 버튼 닫기
+	console.log('클릭');
+	$(this).parent().parent().css('display','none');
+})
 
-$(document).on('click', '.btnUpdate', function () {
+$(document).on('click', '.btnUpdate', function () {	// 수정 내용, 넘버   to Controller
 	let contents = $(this).prev().val();
 	let cno = $(this).attr('cno');
 	$.ajax({
@@ -92,12 +96,26 @@ $(document).on('click', '.btnUpdate', function () {
 		  data: { comment: contents, comment_num: cno}
 		})
 	  .done(function( data ) {
-	    alert( "Data Saved: " + data );
-	   
+	    alert( "Data Saved: " + data );	   
 	    $('#commentList').html(data);
 	  });
 });
-
+$(document).on('click','.btnDelete', function() {
+	console.log('click');
+	let cno = $(this).attr('cnodelete');
+	let bno = $(this).attr('bnodelete');
+	$.ajax({
+		method:"POST",
+		url: "comment-delete.do",
+		data: {comment_num: cno,
+			   b_idx: bno	   
+		}
+	})
+	.done(function(data){
+		alert("삭제완료", + data);
+		$('#commentList').html(data);
+	});		
+});
 </script>
 </body>
 </html>

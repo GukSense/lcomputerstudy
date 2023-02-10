@@ -248,7 +248,10 @@ public class Controller extends HttpServlet {
 				board = boardService.viewContents(board);
 				
 				commentService = CommentService.getInstance();	//comment--------------------------
-				List<Comment> commentList = commentService.getCommentList();
+				comment = new Comment();
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				List<Comment> commentList = commentService.getCommentList(comment);
+				
 				view = "board/contents";
 				
 				request.setAttribute("list", commentList);
@@ -299,22 +302,27 @@ public class Controller extends HttpServlet {
 			case"/comment-delete.do":
 				comment = new Comment();
 				comment.setComment_num(Integer.parseInt(request.getParameter("comment_num")));
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				commentService = CommentService.getInstance();
 				commentService.deleteComment(comment);
 				
-				view ="board/replyResult";
+				List<Comment> comment_deleteList = commentService.getCommentList(comment);
+				request.setAttribute("list", comment_deleteList);
+				request.setAttribute("comment", comment);
+				view ="comment/comment_List";
 				
 				break;
 				
 			case"/comment-edit-update.do":
 				comment = new Comment();
 				comment.setComment_num(Integer.parseInt(request.getParameter("comment_num")));
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment.setContent(request.getParameter("comment"));
 				commentService = CommentService.getInstance();
 				commentService.editComment(comment);
 				
-				List<Comment> commentList2 = commentService.getCommentList();
-				request.setAttribute("list", commentList2);
+				List<Comment> comment_editList = commentService.getCommentList(comment);
+				request.setAttribute("list", comment_editList);
 				request.setAttribute("comment", comment);
 				view = "comment/comment_List";
 				

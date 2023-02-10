@@ -22,26 +22,27 @@ public class CommentDAO {
 		}
 		return dao;
 	}
-	public List<Comment> getCommentList() {
+	public List<Comment> getCommentList(Comment comment) {
 		List<Comment> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			String query ="select * from comment";
+			String query ="select * from comment where comment_board=?";
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, comment.getB_idx());
 			rs = pstmt.executeQuery();
 			list = new ArrayList<>();
 			while(rs.next()) {
-				Comment comment = new Comment();
-				comment.setComment_num(rs.getInt("comment_num"));
-				comment.setWriter(rs.getString("comment_id"));
-				comment.setDate(rs.getString("comment_date"));
-				comment.setContent(rs.getString("comment_content"));
-				comment.setB_idx(rs.getInt("comment_board"));
-				list.add(comment);
+				Comment c = new Comment();
+				c.setComment_num(rs.getInt("comment_num"));
+				c.setWriter(rs.getString("comment_id"));
+				c.setDate(rs.getString("comment_date"));
+				c.setContent(rs.getString("comment_content"));
+				c.setB_idx(rs.getInt("comment_board"));
+				list.add(c);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -134,4 +135,5 @@ public class CommentDAO {
 		}
 	} 
 
+	
 }

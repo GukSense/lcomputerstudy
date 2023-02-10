@@ -19,8 +19,8 @@ public class CommentService {
 		}
 		return service;
 	}
-	public List<Comment> getCommentList() {
-		return dao.getCommentList();
+	public List<Comment> getCommentList(Comment comment) {
+		return dao.getCommentList(comment);
 	}
 	public void commentRegistration(Comment comment) {
 		dao.commentRegistration(comment);
