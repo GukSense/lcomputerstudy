@@ -32,7 +32,7 @@
 	<a href="/lcomputerstudy/board-reply.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글</a>
 	<div>
 		<div></div>
-		<ul>
+		<ul id="commentList">
 			<c:forEach items="${list}" var="comment">
 			<li>
 				<div>
@@ -52,7 +52,7 @@
 			<li style="display: none;">
 				<div>
 					<textarea rows="3" cols="80" style="resize:none"></textarea>
-					<button type="button" class="btnUpdate">등록</button>
+					<button type="button" class="btnUpdate" cno="${comment.comment_num}">등록</button>
 					<button type="button">취소</button>
 				</div>
 			</li>
@@ -82,20 +82,22 @@ $(document).on('click', '.btnUpdateForm', function () {
 	console.log('클릭');
 	$(this).parent().parent().next().css('display', '');
 });
-/*
+
 $(document).on('click', '.btnUpdate', function () {
 	let contents = $(this).prev().val();
 	let cno = $(this).attr('cno');
 	$.ajax({
 		  method: "POST",
-		  url: "comment/update.do",
-		  data: { comment: contents, c_no: cno}
+		  url: "comment-edit-update.do",
+		  data: { comment: contents, comment_num: cno}
 		})
-	  .done(function( msg ) {
-	    alert( "Data Saved: " + msg );
+	  .done(function( data ) {
+	    alert( "Data Saved: " + data );
+	   
+	    $('#commentList').html(data);
 	  });
 });
-*/
+
 </script>
 </body>
 </html>

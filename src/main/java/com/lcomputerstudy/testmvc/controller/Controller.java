@@ -247,7 +247,7 @@ public class Controller extends HttpServlet {
 				boardService.hitsBoard(board);
 				board = boardService.viewContents(board);
 				
-				commentService = CommentService.getInstance();	//comment
+				commentService = CommentService.getInstance();	//comment--------------------------
 				List<Comment> commentList = commentService.getCommentList();
 				view = "board/contents";
 				
@@ -306,12 +306,19 @@ public class Controller extends HttpServlet {
 				
 				break;
 				
-			case"/comment-edit.do":
+			case"/comment-edit-update.do":
 				comment = new Comment();
-				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment.setComment_num(Integer.parseInt(request.getParameter("comment_num")));
-				
+				comment.setContent(request.getParameter("comment"));
 				commentService = CommentService.getInstance();
+				commentService.editComment(comment);
+				
+				List<Comment> commentList2 = commentService.getCommentList();
+				request.setAttribute("list", commentList2);
+				request.setAttribute("comment", comment);
+				view = "comment/comment_List";
+				
+				break;
 				
 				
 				

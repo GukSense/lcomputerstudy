@@ -115,10 +115,13 @@ public class CommentDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query = "UPDATE comment SET comment_content=? WHERE comment_num=?";
+			String query = "UPDATE comment SET comment_content=?, comment_date = NOW() WHERE comment_num=?";
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, query);
+			pstmt.setString(1, comment.getContent());
+			pstmt.setInt(2, comment.getComment_num());
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
