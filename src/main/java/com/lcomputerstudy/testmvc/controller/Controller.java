@@ -297,8 +297,11 @@ public class Controller extends HttpServlet {
 				
 				commentService.commentRegistration(comment);
 				
+				List<Comment> comment_regiList = commentService.getCommentList(comment);
+				request.setAttribute("list", comment_regiList);
 				request.setAttribute("comment", comment);
-				view = "board/replyResult";
+				view = "comment/comment_List";
+				
 				break;
 			case"/comment-delete.do":
 				comment = new Comment();

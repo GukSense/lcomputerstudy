@@ -7,9 +7,30 @@ public class Comment {
 	private int comment_num;
 	private String Writer;
 	private int b_idx;
+	private int order;
+	private int groupNum;
+	private int depth;
 	
 	
 	
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	public int getGroupNum() {
+		return groupNum;
+	}
+	public void setGroupNum(int groupNum) {
+		this.groupNum = groupNum;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
 	public String getWriter() {
 		return Writer;
 	}

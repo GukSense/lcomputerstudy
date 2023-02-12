@@ -74,7 +74,11 @@ public class CommentDAO {
 			pstmt.setString(2, comment.getContent());
 			pstmt.setInt(3, comment.getB_idx());
 			pstmt.executeUpdate();
+			pstmt.close();
 			
+			String query2 = "UPDATE comment SET comment_groupnum= LAST_INSERT_ID() WHERE comment_num = LAST_INSERT_ID()";
+			pstmt = conn.prepareStatement(query2);
+			pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

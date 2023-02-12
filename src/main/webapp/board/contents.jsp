@@ -64,21 +64,33 @@
 	
 	<div>
 		<label><strong>댓글 쓰기</strong></label>
-		<form method="post" action="/lcomputerstudy/comment-regi.do" onsubmit="return confirm('등록하시겠습니까?');">
+		<form id="submitUpdate" method="post" action="/lcomputerstudy/comment-regi.do" onsubmit="return confirm('등록하시겠습니까?');">
 			
 			<div class="simple_wrt">
 				<div class="text">
-					<!--  <a>댓글을 작성해주시려면 로그인 해주세요. 로그인 하시겠습니까?</a> -->
+					<!--  <a>댓글을 작성해주시려면 로그인 해주세요. 로그인 하시겠습니까?</a> -->					
 					<input type="hidden" name ="b_idx" value="${board.b_idx }">
-					<!-- hidden -->
-					<textarea rows="4" cols="50" name="content" style="background: rgb(255,255,255); overflow: hidden; width:690px; height:63px; resize:none;"></textarea>
+					<textarea rows="4" cols="50" id="content" name="content" style="background: rgb(255,255,255); overflow: hidden; width:690px; height:63px; resize:none;"></textarea>
 				</div>
-				<input type="submit" value="등록">
+				<input type="button" value="등록" id="submit">
 			</div>
 		</form>
 	</div>
 	
 <script>
+$(document).on("click",'#submit', function(){
+	let bidx = $("form[id=submitUpdate]").serialize();
+	$.ajax({
+		method:"POST",
+		url:"comment-regi.do",
+		data: bidx,
+	})
+	.done(function(data){
+		alert( "Data Saved: " + data );  
+	    $('#commentList').html(data);
+	})
+})
+
 $(document).on('click', '.btnUpdateForm', function () {	//수정 폼 버튼 
 	console.log('클릭');
 	$(this).parent().parent().next().css('display', '');
