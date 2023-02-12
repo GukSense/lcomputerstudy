@@ -294,6 +294,7 @@ public class Controller extends HttpServlet {
 				comment.setId((User)session.getAttribute("user"));
 				comment.setContent(request.getParameter("content"));
 				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				
 				commentService.commentRegistration(comment);
 				
 				request.setAttribute("comment", comment);
