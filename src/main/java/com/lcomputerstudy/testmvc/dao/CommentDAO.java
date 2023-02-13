@@ -138,6 +138,27 @@ public class CommentDAO {
 			}
 		}
 	} 
-
+	
+	public void replyComment(Comment comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			String query = "";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {conn.close();}
+				if(pstmt != null) {pstmt.close();}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		
+		} 
+	}
 	
 }

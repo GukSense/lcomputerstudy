@@ -34,25 +34,27 @@
 		<div></div>
 		<ul id="commentList">
 			<c:forEach items="${list}" var="comment">
-			<li id="comment_a">
+			<li class="comment_a">
 				<div>
 					<a>id</a>
 					<span>~전</span>
 				</div>
-				<div>${comment.content }</div>
+				<div class="cont">${comment.content }</div>
 				<div>
 					<span></span>
 					<button type="button" class="btnUpdateForm">수정</button>
 					<!--<a href="/lcomputerstudy/comment-delete.do?comment_num=${comment.comment_num }">삭제</a>-->
 					<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
-					<a>답글</a>
-					<!--  <button type="button" class="btnReply">답글</button>-->
+					<!--<a>답글</a>-->
+					<button type="button" class="btnReply" contents="${comment.content }" bidx="${comment.b_idx }" order="${comment.order }" group="${comment.groupNum }" depth="${comment.depth }">
+						답글
+					</button>
 					<br>-----------------
 				</div>
 			</li>
 			<li style="display: none;">
 				<div>
-					<textarea rows="3" cols="80" style="resize:none"></textarea>
+					<textarea class="editBox" rows="3" cols="80"></textarea>
 					<button type="button" class="btnUpdate" cno="${comment.comment_num}" bno="${comment.b_idx }">수정</button>
 					<button type="button" class="btnCancel">취소</button>
 				</div>
@@ -77,61 +79,6 @@
 		</form>
 	</div>
 	
-<script>
-$(document).on("click",'#submit', function(){
-	let bidx = $("form[id=submitUpdate]").serialize();
-	$.ajax({
-		method:"POST",
-		url:"comment-regi.do",
-		data: bidx,
-	})
-	.done(function(data){
-		alert( "Data Saved: " + data );  
-	    $('#commentList').html(data);
-	})
-})
-
-$(document).on('click', '.btnUpdateForm', function () {	//수정 폼 버튼 
-	console.log('클릭');
-	$(this).parent().parent().next().css('display', '');
-});
-$(document).on('click', '.btnCancel', function() {	// 수정 폼 버튼 닫기
-	console.log('클릭');
-	$(this).parent().parent().css('display','none');
-});
-
-$(document).on('click', '.btnUpdate', function () {	// 수정 내용, 넘버   to Controller
-	let contents = $(this).prev().val();
-	let cno = $(this).attr('cno');
-	let bno = $(this).attr('bno');
-	$.ajax({
-		  method: "POST",
-		  url: "comment-edit-update.do",
-		  data: { comment: contents, comment_num: cno, b_idx: bno}
-		})
-	  .done(function( data ) {
-	    alert( "Data Saved: " + data );  
-	    $('#commentList').html(data);
-	  });
-});
-
-$(document).on('click','.btnDelete', function() {	// 삭제 클릭 -> controller info pass 
-	console.log('click');
-	let cno = $(this).attr('cnodelete');
-	let bno = $(this).attr('bnodelete');
-	$.ajax({
-		method:"POST",
-		url: "comment-delete.do",
-		data: {comment_num: cno,
-			   b_idx: bno	   
-		}
-	})
-	.done(function(data){	// 완료 후 html 수정된 html data 받아오기
-		alert("삭제완료", + data);
-		$('#commentList').html(data);
-	});			
-});
-
-</script>
+<script src="/lcomputerstudy/query/jquery.js"></script>
 </body>
 </html>

@@ -331,7 +331,17 @@ public class Controller extends HttpServlet {
 				view = "comment/comment_List";
 				
 				break;
+			case"/comment-reply.do":
+				comment = new Comment();
+				session = request.getSession();
+				comment.setId((User)session.getAttribute("user"));
+				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				comment.setContent(request.getParameter("comment"));
+				comment.setGroupNum(Integer.parseInt(request.getParameter("")));
+				comment.setOrder(Integer.parseInt(request.getParameter("")));
+				comment.setDepth(Integer.parseInt(request.getParameter("")));
 				
+				break;
 				
 				
 				
