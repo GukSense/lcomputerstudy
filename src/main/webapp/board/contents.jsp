@@ -55,7 +55,7 @@
 					<button type="button" class="btnCancel">취소</button>
 				</div>
 			</li>
-			<li style="display: none;">
+			<li style="display: none; list-style-position:inside;">
 				<div>
 					<textarea class="replyBox" rows="3" cols="80"></textarea>
 					<button type="button" class="btnReply" bidx="${comment.b_idx }" order="${comment.order }" group="${comment.groupNum }" depth="${comment.depth }">등록</button>

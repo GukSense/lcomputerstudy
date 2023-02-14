@@ -48,7 +48,7 @@
 		<ul>
 			<li><a href="user-list.do">회원 목록</a></li>
 			<li><a href="logout.do">로그아웃</a></li>
-			<li><a href="board-list.do">게시글 목록</a></li>
+			<li><a href="board-list.do?u_name=${ sessionScope.user.u_name }&u_level=${sessionScope.user.u_level}">게시글 목록</a></li>
 		</ul>
 	</div>
 </body>

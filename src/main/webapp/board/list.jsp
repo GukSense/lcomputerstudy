@@ -129,7 +129,7 @@
 </style>
 </head>
 <body>
-	<button type="button" class="ManagerBtn" userlevel="${user.u_level }">관리자모드-- ${user.u_level }</button>
+	<button type="button" class="ManagerBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level }관리자모드</button>
 	<div class="logo">
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo.jpg" alt="" style="width:150px; height:70px;"></a>
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo_title.jpg" alt="" style="width:400px; height:70px;"></a>

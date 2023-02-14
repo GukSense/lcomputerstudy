@@ -60,7 +60,7 @@ public class UserDAO {
 					user.setU_name(rs.getString("u_name"));
 					user.setU_tel(rs.getString("u_tel"));
 					user.setU_age(rs.getString("u_age"));
-					user.setLevel(rs.getInt("u_level"));
+					user.setU_level(rs.getInt("u_level"));
 					list.add(user);
 				}
 			} catch(Exception e) {
@@ -256,6 +256,7 @@ public class UserDAO {
 				user.setU_pw(rs.getString("u_pw"));
 				user.setU_id(rs.getString("u_id"));
 				user.setU_name(rs.getString("u_name"));
+				user.setU_level(rs.getInt("u_level"));
 			
 			}
 		} catch(Exception ex) {

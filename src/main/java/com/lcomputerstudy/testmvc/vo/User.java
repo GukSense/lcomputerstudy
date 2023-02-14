@@ -12,12 +12,14 @@ public class User {
 	private int u_level;
 	
 	
-	public int getLevel() {
+	
+
+	public int getU_level() {
 		return u_level;
 	}
 
-	public void setLevel(int level) {
-		this.u_level = level;
+	public void setU_level(int u_level) {
+		this.u_level = u_level;
 	}
 
 	public int getU_idx() {
