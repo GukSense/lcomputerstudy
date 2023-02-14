@@ -1,5 +1,3 @@
-const { ajax, data } = require("jquery");
-
 /*
 function reloadDivArea() {	//reload 새로고침 함수
     $('#commentList').load(location.href+' #commentList');
@@ -20,7 +18,7 @@ $(document).on("click",'#submit', function(){	// 댓글입력박스
 	})
 })
 
-$(document).on('click', '.btnUpdateForm', function () {	//수정 폼 버튼 
+$(document).on('click', '.btnUpdateForm', function () {	//수정 폼 오픈 버튼 
 	console.log('클릭');
 	let contents = $(this).parent().parent().find('.cont').text();
 	if (contents!=null) {
@@ -66,9 +64,17 @@ $(document).on('click','.btnDelete', function() {	// 삭제 클릭 -> controller
 		$('#commentList').html(data);
 	});
 });
-
-$(documnet).on('click','.btnReply', function(){
-	let contents = $(this).attr('contents');
+$(document).on('click', '.btnReplyForm', function () {	//답글 폼 오픈 버튼 
+	console.log('클릭');
+	$(this).parent().parent().next().next().css('display','');
+	
+});
+$(document).on('click', '.btnCancelR', function() {	// 답글 폼 버튼 닫기
+	console.log('클릭');
+	$(this).parent().parent().css('display','none');
+});
+$(document).on('click','.btnReply', function(){
+	let contents = $(this).prev().val();
 	let bidx = $(this).attr('bidx');
 	let order = $(this).attr('order');
 	let group = $(this).attr('group');

@@ -335,12 +335,19 @@ public class Controller extends HttpServlet {
 				comment = new Comment();
 				session = request.getSession();
 				comment.setId((User)session.getAttribute("user"));
-				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				comment.setContent(request.getParameter("comment"));
-				comment.setGroupNum(Integer.parseInt(request.getParameter("")));
-				comment.setOrder(Integer.parseInt(request.getParameter("")));
-				comment.setDepth(Integer.parseInt(request.getParameter("")));
+				comment.setB_idx(Integer.parseInt(request.getParameter("bidx")));
+				comment.setContent(request.getParameter("contents"));
+				comment.setGroupNum(Integer.parseInt(request.getParameter("groupNum")));
+				comment.setOrder(Integer.parseInt(request.getParameter("order"))+1);
+				comment.setDepth(Integer.parseInt(request.getParameter("depth"))+1);
 				
+				commentService = CommentService.getInstance();
+				commentService.replyComment(comment);
+				List<Comment> comment_replyList = commentService.getCommentList(comment);
+				request.setAttribute("list", comment_replyList);
+				request.setAttribute("comment", comment);
+				
+				view = "comment/comment_List";
 				break;
 				
 				

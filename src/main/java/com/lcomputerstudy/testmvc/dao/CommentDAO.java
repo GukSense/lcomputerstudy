@@ -29,7 +29,7 @@ public class CommentDAO {
 		ResultSet rs = null;
 		
 		try {
-			String query ="select * from comment where comment_board=?";
+			String query ="select * from comment where comment_board=? order by comment_groupnum asc, comment_order asc";
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, comment.getB_idx());
@@ -42,6 +42,8 @@ public class CommentDAO {
 				c.setDate(rs.getString("comment_date"));
 				c.setContent(rs.getString("comment_content"));
 				c.setB_idx(rs.getInt("comment_board"));
+				c.setGroupNum(rs.getInt("comment_groupnum"));
+				c.setOrder(rs.getInt("comment_order"));
 				list.add(c);
 			}
 		} catch(Exception e) {
@@ -66,7 +68,7 @@ public class CommentDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query ="insert into comment (comment_date,comment_id, comment_content,comment_board) values(NOW(),?,?,?)";
+			String query ="insert into comment (comment_date, comment_id, comment_content, comment_board) values(NOW(),?,?,?)";
 			user = comment.getId();
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
@@ -142,12 +144,26 @@ public class CommentDAO {
 	public void replyComment(Comment comment) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		User user = null;
 		try {
-			String query = "";
+			String query = "insert into comment (comment_date, comment_id, comment_content, comment_board, comment_order, comment_depth, comment_groupnum) values(NOW(),?,?,?,?,?,?)";
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
+			user = comment.getId();
+			pstmt.setString(1, user.getU_id());
+			pstmt.setString(2, comment.getContent());
+			pstmt.setInt(3, comment.getB_idx());
+			pstmt.setInt(4, comment.getOrder());
+			pstmt.setInt(5, comment.getDepth());
+			pstmt.setInt(6, comment.getGroupNum());
+			pstmt.executeUpdate();
+			pstmt.close();
 			
-			
+			String query2 = "UPDATE comment SET comment_order = comment_order+1 WHERE comment_groupnum=? AND comment_num !=LAST_INSERT_ID() AND comment_order >= ?";
+			pstmt = conn.prepareStatement(query2);
+			pstmt.setInt(1, comment.getGroupNum());
+			pstmt.setInt(2, comment.getOrder());
+			pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

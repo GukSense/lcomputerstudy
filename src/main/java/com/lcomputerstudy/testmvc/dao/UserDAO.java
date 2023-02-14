@@ -60,6 +60,7 @@ public class UserDAO {
 					user.setU_name(rs.getString("u_name"));
 					user.setU_tel(rs.getString("u_tel"));
 					user.setU_age(rs.getString("u_age"));
+					user.setLevel(rs.getInt("u_level"));
 					list.add(user);
 				}
 			} catch(Exception e) {
@@ -83,7 +84,7 @@ public class UserDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into user(u_id,u_pw,u_name,u_tel,u_age) value(?,?,?,?,?)";
+			String sql = "insert into user(u_id,u_pw,u_name,u_tel,u_age, u_level) value(?,?,?,?,?,1)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getU_id());
 			pstmt.setString(2, user.getU_pw());

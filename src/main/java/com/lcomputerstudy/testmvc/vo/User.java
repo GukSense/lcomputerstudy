@@ -9,7 +9,17 @@ public class User {
 	private String u_tel;
 	private String u_age;
 	private int rownum;
+	private int u_level;
 	
+	
+	public int getLevel() {
+		return u_level;
+	}
+
+	public void setLevel(int level) {
+		this.u_level = level;
+	}
+
 	public int getU_idx() {
 		return u_idx;
 	}

@@ -39,16 +39,12 @@
 					<a>id</a>
 					<span>~전</span>
 				</div>
-				<div class="cont">${comment.content }</div>
+				<div class="cont">${comment.content }--group:${comment.groupNum }-- order:${comment.order }</div>
 				<div>
 					<span></span>
 					<button type="button" class="btnUpdateForm">수정</button>
-					<!--<a href="/lcomputerstudy/comment-delete.do?comment_num=${comment.comment_num }">삭제</a>-->
 					<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
-					<!--<a>답글</a>-->
-					<button type="button" class="btnReply" contents="${comment.content }" bidx="${comment.b_idx }" order="${comment.order }" group="${comment.groupNum }" depth="${comment.depth }">
-						답글
-					</button>
+					<button type="button" class="btnReplyForm">답글</button>
 					<br>-----------------
 				</div>
 			</li>
@@ -57,6 +53,13 @@
 					<textarea class="editBox" rows="3" cols="80"></textarea>
 					<button type="button" class="btnUpdate" cno="${comment.comment_num}" bno="${comment.b_idx }">수정</button>
 					<button type="button" class="btnCancel">취소</button>
+				</div>
+			</li>
+			<li style="display: none;">
+				<div>
+					<textarea class="replyBox" rows="3" cols="80"></textarea>
+					<button type="button" class="btnReply" bidx="${comment.b_idx }" order="${comment.order }" group="${comment.groupNum }" depth="${comment.depth }">등록</button>
+					<button type="button" class="btnCancelR">취소</button>
 				</div>
 			</li>
 			</c:forEach>
@@ -79,6 +82,6 @@
 		</form>
 	</div>
 	
-<script src="/lcomputerstudy/query/jquery.js"></script>
+<script src="/lcomputerstudy/query/comment.js"></script>
 </body>
 </html>
