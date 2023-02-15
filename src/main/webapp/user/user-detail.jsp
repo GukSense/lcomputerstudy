@@ -43,7 +43,7 @@
 	</tr>
 	<tr>
 		<td>회원 이름</td>
-		<td>${user.u_pw }</td>
+		<td>${user.u_name }</td>
 	</tr>
 	<tr>
 		<td>회원 전화번호</td>
@@ -52,6 +52,10 @@
 	<tr>
 		<td>회원 나이</td>
 		<td>${user.u_age }</td>
+	</tr>
+	<tr>
+		<td>회원 레벨</td>
+		<td>${user.u_level }</td>
 	</tr>
 	<tr style = "height:50px">	
 		<td style="border:none;">	

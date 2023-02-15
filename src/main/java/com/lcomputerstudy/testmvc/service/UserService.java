@@ -48,4 +48,7 @@ public class UserService {
 	public User loginUser(String idx, String pw) {
 		return dao.loginUser(idx,pw);
 	}
+	public User administrator(User user) {
+		return dao.administrator(user);
+	}
 }

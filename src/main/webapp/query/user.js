@@ -1,4 +1,15 @@
-$(document).on('click','ManagerBtn',function(){
+
+$(document).on('click','.nomalBtn',function(){
 	console.log('click');
-	$(this).attr('userlevel');
+	let idx = $(this).attr('useridx');
+	console.log(idx)
+	$.ajax({
+		method:"POST",
+		url:"administrator-mode.do",
+		data:{idx:idx}		
+	})
+	.done(function(data){
+		console.log(data);
+		$('.administratorBtn').html(data);
+	})
 })

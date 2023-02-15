@@ -125,7 +125,7 @@ public class Controller extends HttpServlet {
 				user.setU_name(request.getParameter("edit_name"));
 				user.setU_tel(request.getParameter("edit_tel1") + "-" + request.getParameter("edit_tel2") + "-" + request.getParameter("edit_tel3"));
 				user.setU_age(request.getParameter("age"));
-				
+				user.setU_level(Integer.parseInt(request.getParameter("edit_u_level")));
 				userService = UserService.getInstance();
 				userService.editUsers(user);
 				view = "user/editProcess";
@@ -139,6 +139,7 @@ public class Controller extends HttpServlet {
 				userService.deleteUser(user);
 				view = "user/delete";
 				break;
+			
 			case"/user-login.do":
 				view = "user/login";
 				break;
@@ -168,6 +169,17 @@ public class Controller extends HttpServlet {
 				break;
 			case "/access-denied.do":
 				view=  "user/access-denied";
+				break;
+			case "/administrator-mode.do":
+				User user2 = new User();	//jquery로 데이터를 받을 user 객체
+//				user.setU_level(Integer.parseInt(request.getParameter("level")));
+				user2.setU_idx(Integer.parseInt(request.getParameter("idx")));
+				userService = UserService.getInstance();
+				user = userService.administrator(user2);
+				
+				session = request.getSession();
+				session.setAttribute("user", user);
+				view = "user/tmp";
 				break;
 //	여기서부터 계층형 게시판	---------------------------------------------------------
 				

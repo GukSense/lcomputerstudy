@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <title>board-list</title>
 <style>
 	a {
@@ -118,7 +119,7 @@
 	.logo {
 		text-align:center;
 	}
-	.ManagerBtn {
+	.administratorBtn, .nomalBtn, .manageBtn {
 		border: none;
 		background:#ffffff;
 		outline: none;
@@ -129,7 +130,9 @@
 </style>
 </head>
 <body>
-	<button type="button" class="ManagerBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level }관리자모드</button>
+	<button type="button" class="administratorBtn">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level } 관리자 pk:${ sessionScope.user.u_idx }</button>
+	<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
+	<br><button type="button" class="nomalBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">돌아가기</button>
 	<div class="logo">
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo.jpg" alt="" style="width:150px; height:70px;"></a>
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo_title.jpg" alt="" style="width:400px; height:70px;"></a>
@@ -222,6 +225,6 @@
 			</c:choose>
 		</ul>
 	</div>
-	
+	<script src="/lcomputerstudy/query/user.js"></script>
 </body>
 </html>

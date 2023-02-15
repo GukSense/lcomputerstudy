@@ -127,6 +127,7 @@ public class UserDAO {
 		         resultUser.setU_name(rs.getString("u_name"));  
 		   	     resultUser.setU_tel(rs.getString("u_tel"));
 		   	     resultUser.setU_age(rs.getString("u_age"));
+		   	     resultUser.setU_level(rs.getInt("u_level"));
 			 }
 
 			
@@ -153,7 +154,7 @@ public class UserDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String query = "update user set u_id=?, u_pw=?,u_name=?,u_tel=?,u_age=? where u_idx=?";
+			String query = "update user set u_id=?, u_pw=?,u_name=?,u_tel=?,u_age=?, u_level=? where u_idx=?";
 			pstmt = conn.prepareStatement(query);
 			
 			pstmt.setString(1, user.getU_id());
@@ -161,7 +162,8 @@ public class UserDAO {
 			pstmt.setString(3, user.getU_name());
 			pstmt.setString(4, user.getU_tel());
 			pstmt.setString(5, user.getU_age());
-			pstmt.setString(6, idx);
+			pstmt.setInt(6, user.getU_level());
+			pstmt.setString(7, idx);
 			pstmt.executeUpdate();	
 		
 			
@@ -237,6 +239,7 @@ public class UserDAO {
 		return count;
 	}
 	public User loginUser(String idx, String pw) {
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -271,5 +274,46 @@ public class UserDAO {
 		}
 		return user;
 	}	// end of loginUser
-
+	
+	public User administrator(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User u = null;
+		try {
+			String query = "update user set u_level = 1 where u_idx=?";
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(query);
+//			pstmt.setInt(1, user.getU_level());
+			pstmt.setInt(1, user.getU_idx());
+			pstmt.executeUpdate();	
+			pstmt.close();
+			
+			String query2 = "select * from user where u_idx=?";
+			pstmt = conn.prepareStatement(query2);
+			pstmt.setInt(1, user.getU_idx());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				u = new User();
+				u.setU_name(rs.getString("u_name"));
+				u.setU_level(rs.getInt("u_level"));
+				u.setU_idx(rs.getInt("u_idx"));
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} catch(ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} finally {
+			try{
+				if(conn!= null) {conn.close();}
+				if(pstmt!=null) {pstmt.close();}
+				if(rs!=null) {rs.close();}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return u;
+	}
 }

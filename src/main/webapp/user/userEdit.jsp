@@ -12,12 +12,13 @@
 		<p><input type="hidden" name="edit_u_idx" value="${user.u_idx}"></p>
 		<p> 아이디: 	<input type="text" name="edit_id" value="${user.u_id}"></p>
 		<p> 비밀번호: <input type="password" name="edit_password" value="${user.u_pw}"></p>
-		<p> 이름 : <input type="text" maxlength="4" size="4" name="edit_name" value=""></p>
+		<p> 이름 : <input type="text" maxlength="4" size="4" name="edit_name" value="${user.u_name }"></p>
 		<p> 연락처: <input type="text" maxlength="4" size="4" name="edit_tel1" value="">-
 				  <input type="text" maxlength="4" size="4" name="edit_tel2">-
 				  <input type="text" maxlength="4" size="4" name="edit_tel3">	
 		</p>
-		<p> 나이: <input type="text" name="age"></p>
+		<p> 나이: <input type="text" name="age" value="${user.u_age }"></p>
+		<p>	레벨: <input type="number" name="edit_u_level" value="${user.u_level }" min="1" max="9"></p>
 		<p> <input type="submit"value="수정완료"></p>
 	</form>
 </body>
