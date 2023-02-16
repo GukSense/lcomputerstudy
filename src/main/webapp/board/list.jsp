@@ -119,7 +119,7 @@
 	.logo {
 		text-align:center;
 	}
-	.administratorBtn, .nomalBtn, .manageBtn {
+	.administratorBtn, .retrunBtn, .manageBtn {
 		border: none;
 		background:#ffffff;
 		outline: none;
@@ -131,8 +131,11 @@
 </head>
 <body>
 	<button type="button" class="administratorBtn">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level } 관리자 pk:${ sessionScope.user.u_idx }</button>
-	<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
-	<br><button type="button" class="nomalBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">돌아가기</button>
+	
+	<c:if test="${ sessionScope.user.u_level >= 9}">
+		<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
+		<br><button type="button" class="retrunBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">돌아가기</button>
+	</c:if>
 	<div class="logo">
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo.jpg" alt="" style="width:150px; height:70px;"></a>
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo_title.jpg" alt="" style="width:400px; height:70px;"></a>

@@ -23,7 +23,7 @@ public class UserDAO {
 		if(dao == null) {
 			dao = new UserDAO();
 		}
-		return dao;
+		return dao; 
 	}
 	
 	public List<User> getUsers(Pagination pagination){
