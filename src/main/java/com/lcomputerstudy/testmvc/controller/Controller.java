@@ -54,6 +54,8 @@ public class Controller extends HttpServlet {
 		CommentService commentService = null;
 		HttpSession session = null;
 		
+		boolean isRedirected = false;;
+		
 		command = checkSession(request, response, command);
 		
 		response.setContentType("text/html; charset=utf-8");
@@ -141,6 +143,7 @@ public class Controller extends HttpServlet {
 				break;
 			
 			case"/user-login.do":
+				
 				view = "user/login";
 				break;
 			case"/user-login-process.do":
@@ -151,10 +154,6 @@ public class Controller extends HttpServlet {
 				user = userService.loginUser(idx,pw);
 				if(user != null) {
 					session = request.getSession();
-//					session.setAttribute("u_idx", user.getU_idx());
-//					session.setAttribute("u_id", user.getU_id());
-//					session.setAttribute("u_pw", user.getU_pw());
-//					session.setAttribute("u_name", user.getU_name());
 					session.setAttribute("user", user);
 					
 					view = "user/login-result";					
@@ -165,7 +164,9 @@ public class Controller extends HttpServlet {
 			case "/logout.do":
 				session = request.getSession();
 				session.invalidate();
-				view = "user/login";
+				//view = "user/login";
+				view = "board-list.do";
+				isRedirected = true;
 				break;
 			case "/access-denied.do":
 				view=  "user/access-denied";
@@ -203,6 +204,7 @@ public class Controller extends HttpServlet {
 				pagi.init();
 				
 				boardList = boardService.getBoardList(pagi);
+				
 				
 				request.setAttribute("list", boardList);
 				request.setAttribute("pagination", pagi);
@@ -366,10 +368,14 @@ public class Controller extends HttpServlet {
 				
 				
 		}
+		if (isRedirected ) {
+			response.sendRedirect(view);
+		} else {
+			//결정한다 리다이렉트방식일지 포워드일지
+			RequestDispatcher rd = request.getRequestDispatcher(view + ".jsp");
+			rd.forward(request, response);
+		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher(view + ".jsp");
-		rd.forward(request, response);
-	
 	}
 	
 	String checkSession(HttpServletRequest request, HttpServletResponse response, String command) {

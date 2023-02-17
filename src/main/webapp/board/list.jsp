@@ -119,7 +119,7 @@
 	.logo {
 		text-align:center;
 	}
-	.administratorBtn, .retrunBtn, .manageBtn {
+	.administratorBtn, .retrunBtn, .manageBtn, .loginBtn, .logoutBtn{
 		border: none;
 		background:#ffffff;
 		outline: none;
@@ -130,7 +130,16 @@
 </style>
 </head>
 <body>
-	<button type="button" class="administratorBtn">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level } 관리자 pk:${ sessionScope.user.u_idx }</button>
+	<c:choose>
+		<c:when test="${empty sessionScope.user.u_idx }">
+			<span><button type="button" class="loginBtn" onclick="location.href='/lcomputerstudy/user-login.do'">로그인</button></span>
+		</c:when>
+		<c:otherwise>
+			<span><button type="button" class="logoutBtn" onclick="location.href='/lcomputerstudy/logout.do'">로그아웃</button></span>
+			<button type="button" class="administratorBtn">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level } 관리자 pk:${ sessionScope.user.u_idx }</button>
+		</c:otherwise>
+	</c:choose>
+	
 	
 	<c:if test="${ sessionScope.user.u_level >= 9}">
 		<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
@@ -186,9 +195,11 @@
 					
 				</form>
 			</div>
-			<div class= "fr">
-					<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
-			</div>
+			<c:if test="${not empty sessionScope.user.u_idx}">
+				<div class= "fr">
+						<input type="button" class="written" onclick="location='/lcomputerstudy/board-registration.do'" value="글쓰기"  name="write">
+				</div>
+			</c:if>
 		</div>
 		</tr>
 	</table>
@@ -228,6 +239,7 @@
 			</c:choose>
 		</ul>
 	</div>
-	<script src="/lcomputerstudy/query/user.js"></script>
+	<script src="/lcomputerstudy/query/user.js">if(window.location == ){}</script>
+	
 </body>
 </html>

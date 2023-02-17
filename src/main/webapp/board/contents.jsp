@@ -11,9 +11,31 @@
 		li {
 			list-style:none;
 		}
+		.administratorBtn, .retrunBtn, .manageBtn, .loginBtn, .logoutBtn{
+		border: none;
+		background:#ffffff;
+		outline: none;
+		float: right;
+		color: #1b5ac2;
+	}
 	</style>
 </head>
 <body>
+	<c:choose>
+		<c:when test="${empty sessionScope.user.u_idx }">
+			<span><button type="button" class="loginBtn" onclick="location.href='/lcomputerstudy/user-login.do'">로그인</button></span>
+		</c:when>
+		<c:otherwise>
+			<span><button type="button" class="logoutBtn" onclick="location.href='/lcomputerstudy/logout.do'">로그아웃</button></span>
+			<button type="button" class="administratorBtn">${ sessionScope.user.u_name }님 레벨 :${ sessionScope.user.u_level } 관리자 pk:${ sessionScope.user.u_idx }</button>
+		</c:otherwise>
+	</c:choose>
+	
+	
+	<c:if test="${ sessionScope.user.u_level >= 9}">
+		<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
+		<br><button type="button" class="retrunBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">돌아가기</button>
+	</c:if>
 	<table>
 		<tr>
 			<th><h3>제목: ${board.title }</h3></th>
@@ -27,8 +49,11 @@
 	</table>
 
 	<a href="/lcomputerstudy/board-list.do">돌아가기</a>
+	<c:if test="${sessionScope.user.u_level >= 9}">
 	<a href="/lcomputerstudy/board-edit.do?b_idx=${board.b_idx }">수정</a>
-	<a href="/lcomputerstudy/board-delete.do?b_idx=${board.b_idx}">삭제</a>
+		<a href="/lcomputerstudy/board-delete.do?b_idx=${board.b_idx}">삭제</a>
+	</c:if>
+	
 	<a href="/lcomputerstudy/board-reply.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글</a>
 	<div>
 		<div></div>
@@ -42,8 +67,10 @@
 				<div class="cont">${comment.content }--group:${comment.groupNum }-- order:${comment.order }</div>
 				<div>
 					<span></span>
-					<button type="button" class="btnUpdateForm">수정</button>
-					<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
+					<c:if test="${ sessionScope.user.u_level >= 9}">
+						<button type="button" class="btnUpdateForm">수정</button>
+						<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
+					</c:if>
 					<button type="button" class="btnReplyForm">답글</button>
 					<br>-----------------
 				</div>
