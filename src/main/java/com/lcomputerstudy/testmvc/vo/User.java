@@ -10,7 +10,8 @@ public class User {
 	private String u_age;
 	private int rownum;
 	private int u_level;
-	
+	public static final int authority = 9;
+	public static final int nomal = 1;
 	
 	
 

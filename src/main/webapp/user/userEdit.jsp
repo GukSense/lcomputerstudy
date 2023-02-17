@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,14 @@
 				  <input type="text" maxlength="4" size="4" name="edit_tel3">	
 		</p>
 		<p> 나이: <input type="text" name="age" value="${user.u_age }"></p>
-		<p>	레벨: <input type="number" name="edit_u_level" value="${user.u_level }" min="1" max="9"></p>
+		<c:choose>
+			<c:when test="${User.authority  }">
+				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${User.authority }" checked >관리자${User.authority }<input type="checkbox" name="edit_u_auth" value="${User.nomal }" >일반${User.nomal }</p>
+			</c:when>
+			<c:otherwise>
+				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${User.authority }" >관리자${User.authority }<input type="checkbox" name="edit_u_auth" value="${User.nomal }" checked >일반${User.nomal }</p>
+			</c:otherwise>
+		</c:choose>
 		<p> <input type="submit"value="수정완료"></p>
 	</form>
 </body>

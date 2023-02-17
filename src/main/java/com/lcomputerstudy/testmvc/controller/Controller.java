@@ -127,9 +127,10 @@ public class Controller extends HttpServlet {
 				user.setU_name(request.getParameter("edit_name"));
 				user.setU_tel(request.getParameter("edit_tel1") + "-" + request.getParameter("edit_tel2") + "-" + request.getParameter("edit_tel3"));
 				user.setU_age(request.getParameter("age"));
-				user.setU_level(Integer.parseInt(request.getParameter("edit_u_level")));
+				user.setU_level(Integer.parseInt(request.getParameter("edit_u_auth")));
 				userService = UserService.getInstance();
 				userService.editUsers(user);
+				
 				view = "user/editProcess";
 	
 				break;
