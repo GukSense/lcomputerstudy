@@ -21,10 +21,12 @@
 		<p> 나이: <input type="text" name="age" value="${user.u_age }"></p>
 		<c:choose>
 			<c:when test="${User.authority  }">
-				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${User.authority }" checked >관리자${User.authority }<input type="checkbox" name="edit_u_auth" value="${User.nomal }" >일반${User.nomal }</p>
+				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${User.authority }" checked >관리자
+						<input type="checkbox" name="edit_u_auth" value="${user.getNomal() }" >일반</p>
 			</c:when>
 			<c:otherwise>
-				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${User.authority }" >관리자${User.authority }<input type="checkbox" name="edit_u_auth" value="${User.nomal }" checked >일반${User.nomal }</p>
+				<p>	권한: <input type="checkbox" name="edit_u_auth" value="${user.getAuthority() }" >관리자
+						<input type="checkbox" name="edit_u_auth" value="${user.getNomal() }" checked >일반</p>
 			</c:otherwise>
 		</c:choose>
 		<p> <input type="submit"value="수정완료"></p>

@@ -44,6 +44,7 @@ public class CommentDAO {
 				c.setB_idx(rs.getInt("comment_board"));
 				c.setGroupNum(rs.getInt("comment_groupnum"));
 				c.setOrder(rs.getInt("comment_order"));
+				c.setUser_idx(rs.getInt("comment_idx"));
 				list.add(c);
 			}
 		} catch(Exception e) {
@@ -63,18 +64,21 @@ public class CommentDAO {
 	}
 	
 	public void commentRegistration(Comment comment) {
-		User user = null;
+		User userId = null;
+		User userIdx = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query ="insert into comment (comment_date, comment_id, comment_content, comment_board) values(NOW(),?,?,?)";
-			user = comment.getId();
+			String query ="insert into comment (comment_date, comment_id, comment_content, comment_board,comment_idx) values(NOW(),?,?,?,?)";
+			userId = comment.getId();
+			userIdx = comment.getU_idx();
 			conn = DBConnection.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, user.getU_id());
+			pstmt.setString(1, userId.getU_id());
 			pstmt.setString(2, comment.getContent());
 			pstmt.setInt(3, comment.getB_idx());
+			pstmt.setInt(4, userIdx.getU_idx());
 			pstmt.executeUpdate();
 			pstmt.close();
 			

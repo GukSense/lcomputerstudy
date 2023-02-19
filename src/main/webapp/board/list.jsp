@@ -143,7 +143,7 @@
 	
 	<c:if test="${ sessionScope.user.u_level >= 9}">
 		<br><button type="button" class="manageBtn" onclick="location.href='/lcomputerstudy/user-list.do'">회원관리</button>
-		<br><button type="button" class="retrunBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">돌아가기</button>
+		<br><button type="button" class="retrunBtn" username="${ sessionScope.user.u_name }"userlevel="${ sessionScope.user.u_level }" useridx="${ sessionScope.user.u_idx }">일반모드</button>
 	</c:if>
 	<div class="logo">
 		<a href="/lcomputerstudy/board-list.do"><img src="/lcomputerstudy/img/logo.jpg" alt="" style="width:150px; height:70px;"></a>

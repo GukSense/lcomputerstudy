@@ -14,11 +14,17 @@ public class User {
 	public static final int nomal = 1;
 	
 	
+	
 
+	public static int getAuthority() {
+		return authority;
+	}
+	public static int getNomal() {
+		return nomal;
+	}
 	public int getU_level() {
 		return u_level;
 	}
-
 	public void setU_level(int u_level) {
 		this.u_level = u_level;
 	}
@@ -74,6 +80,5 @@ public class User {
 	public int getRownum() {
 		return rownum;
 	}
-
 
 }

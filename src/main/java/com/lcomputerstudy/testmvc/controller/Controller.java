@@ -265,6 +265,7 @@ public class Controller extends HttpServlet {
 				commentService = CommentService.getInstance();	//comment--------------------------
 				comment = new Comment();
 				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
+				
 				List<Comment> commentList = commentService.getCommentList(comment);
 				
 				view = "board/contents";
@@ -272,6 +273,7 @@ public class Controller extends HttpServlet {
 				request.setAttribute("list", commentList);
 				request.setAttribute("board", board);
 				request.setAttribute("hits", hits);
+				
 				break;
 			case "/board-edit.do":
 				board = new Board();
@@ -301,7 +303,7 @@ public class Controller extends HttpServlet {
 //		댓글 comment	-------------------------------------------------------------
 				
 				
-			case"/comment-regi.do":
+			case"/comment-regi.do":		//댓글등록
 				comment = new Comment();
 				session = request.getSession();
 				commentService = CommentService.getInstance();
@@ -309,7 +311,7 @@ public class Controller extends HttpServlet {
 				comment.setId((User)session.getAttribute("user"));
 				comment.setContent(request.getParameter("content"));
 				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
-				
+				comment.setU_idx((User)session.getAttribute("user"));
 				commentService.commentRegistration(comment);
 				
 				List<Comment> comment_regiList = commentService.getCommentList(comment);

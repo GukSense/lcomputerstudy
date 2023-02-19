@@ -21,7 +21,7 @@
 	</style>
 </head>
 <body>
-	<c:choose>
+	<c:choose>	
 		<c:when test="${empty sessionScope.user.u_idx }">
 			<span><button type="button" class="loginBtn" onclick="location.href='/lcomputerstudy/user-login.do'">로그인</button></span>
 		</c:when>
