@@ -19,6 +19,8 @@ import com.lcomputerstudy.testmvc.vo.Comment;
 import com.lcomputerstudy.testmvc.vo.Pagination;
 import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 
@@ -61,6 +63,8 @@ public class Controller extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		
+		MultipartRequest multi = null;	//파일업로드 구현을 위한 객체
+			
 		switch (command) {
 			case "/user-list.do":
 				String reqPage = request.getParameter("page");
@@ -216,12 +220,23 @@ public class Controller extends HttpServlet {
 				view = "board/registration";
 				break;
 			case "/board-process.do":
+				int sizeLimit = 10 * 1024 * 1024;
+				String savePath = request.getRealPath("/upload");
+				
+				try {
+					multi = new MultipartRequest(request, savePath, sizeLimit, "euc-kr", new DefaultFileRenamePolicy());	//equest 객체와 경로, 파일의 최대 사이즈, 인코딩 ,기본 이름 재명명 정책 객체
+				} catch(Exception  e) {
+					e.printStackTrace();
+				}
+				
+				String fileName = multi.getFilesystemName("fileName");
+				
 				board = new Board();
 				session = request.getSession();
-				board.setTitle(request.getParameter("board-title"));
-				board.setContent(request.getParameter("board-content"));
+				board.setTitle(multi.getParameter("board-title"));
+				board.setContent(multi.getParameter("board-content"));
 				board.setUser((User)session.getAttribute("user"));
-				board.setB_category(request.getParameter("category"));
+				board.setB_category(multi.getParameter("category"));
 				board.setU_idx((User)session.getAttribute("user"));
 				boardService = BoardService.getInstance();
 				boardService.writingRegiStraion(board);

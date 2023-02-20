@@ -28,11 +28,14 @@
 		color:#ffffff;
 		float:right;
 	}
+	.fileBtn{
+		float:left;
+	}
 	
 </style>
 </head>
 <body>
-	<form method="post" action="/lcomputerstudy/board-process.do" onsubmit="return confirm('등록하시겠습니까?');" name="registration">
+	<form method="post" action="/lcomputerstudy/board-process.do" onsubmit="return confirm('등록하시겠습니까?');" name="registration" enctype="multipart/form-data">
     			<table style= "text-align: center; boarder: 1px solid #dddddd; margin-left:auto; margin-right:auto;">
 	    	    	<thead>
 		    	    	<tr>
@@ -57,8 +60,13 @@
 			    			</td>
 			    		</tr>
 			    	</tbody>
-			    	<tr><td><input type="submit" class="btn" value="글쓰기" ></td></tr>
+			    	<tr>
+			    		<td><input type="file" name="fileName" class= "fileBtn"></td>
+			    		<td><input type="submit" class="btn" value="글쓰기" ></td></tr>
     	    	</table>
     </form>
+
+	
+	
 </body>
 </html>
