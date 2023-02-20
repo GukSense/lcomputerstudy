@@ -49,8 +49,8 @@
 	</table>
 
 	<a href="/lcomputerstudy/board-list.do">돌아가기</a>
-	<c:if test="${sessionScope.user.u_level >= 9}">
-	<a href="/lcomputerstudy/board-edit.do?b_idx=${board.b_idx }">수정</a>
+	<c:if test="${sessionScope.user.u_idx == board.user_idx}"><a href="/lcomputerstudy/board-edit.do?b_idx=${board.b_idx }">수정</a></c:if>
+	<c:if test="${sessionScope.user.u_level >= 9 || (sessionScope.user.u_idx == board.user_idx)}">
 		<a href="/lcomputerstudy/board-delete.do?b_idx=${board.b_idx}">삭제</a>
 	</c:if>
 	
@@ -66,11 +66,9 @@
 				</div>
 				<div class="cont">${comment.content }--group:${comment.groupNum }-- order:${comment.order }</div>
 				<div>
-					<span></span>
-					<c:if test="${ sessionScope.user.u_level >= 9}">
-						<button type="button" class="btnUpdateForm">수정</button>
-						<button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button>
-					</c:if>
+					<span>${ sessionScope.user.u_level >= 9 || (sessionScope.user.u_idx == comment.user_idx)}</span>
+					<c:if test="${sessionScope.user.u_idx == board.user_idx}"><button type="button" class="btnUpdateForm">수정</button></c:if>
+					<c:if test="${ sessionScope.user.u_level >= 9 || (sessionScope.user.u_idx == comment.user_idx)}"><button type="button" class="btnDelete" cnodelete="${comment.comment_num}" bnodelete="${comment.b_idx }">삭제</button></c:if>
 					<button type="button" class="btnReplyForm">답글</button>
 					<br>-----------------
 				</div>

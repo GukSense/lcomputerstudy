@@ -13,8 +13,23 @@ public class Board {
 	private int b_order;
 	private int b_depth;
 	private String b_category;
+	private User u_idx;
+	private int user_idx;
+
 	
 	
+	public User getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(User u_idx) {
+		this.u_idx = u_idx;
+	}
+	public int getUser_idx() {
+		return user_idx;
+	}
+	public void setUser_idx(int user_idx) {
+		this.user_idx = user_idx;
+	}
 	public String getB_category() {
 		return b_category;
 	}

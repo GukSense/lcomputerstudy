@@ -222,6 +222,7 @@ public class Controller extends HttpServlet {
 				board.setContent(request.getParameter("board-content"));
 				board.setUser((User)session.getAttribute("user"));
 				board.setB_category(request.getParameter("category"));
+				board.setU_idx((User)session.getAttribute("user"));
 				boardService = BoardService.getInstance();
 				boardService.writingRegiStraion(board);
 				view = "board/registraion_result";
@@ -246,6 +247,7 @@ public class Controller extends HttpServlet {
 				board.setTitle(request.getParameter("reply-title"));
 				board.setContent(request.getParameter("reply-content"));
 				board.setUser((User)session.getAttribute("user"));				
+				board.setU_idx((User)session.getAttribute("user"));
 				
 				boardService = BoardService.getInstance();
 				boardService.replyBoard(board);
@@ -258,6 +260,7 @@ public class Controller extends HttpServlet {
 				board.setB_order(Integer.parseInt(request.getParameter("b_order")));
 				board.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
+				board.setUser_idx(Integer.parseInt(request.getParameter("u_idx")));
 				boardService = BoardService.getInstance();
 				boardService.hitsBoard(board);
 				board = boardService.viewContents(board);
