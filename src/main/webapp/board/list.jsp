@@ -170,7 +170,10 @@
 		<c:forEach items="${list}" var="board">
 			<tr>
 				<td>${board.b_category}</td>				
-				<td class= "td_title"><a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}&u_idx=${board.user_idx }">${board.title }</a></td>
+				<td class= "td_title">
+					<a href="/lcomputerstudy/board-view-content.do?b_idx=${board.b_idx}&b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}&u_idx=${board.user_idx }&b_file=${board.fileName}">
+						${board.title }		${board.fileName}		
+					</a></td>
 				<td>${board.writer} </td>
 				<td>${board.date }</td>
 				<td>${board.hits }</td>

@@ -15,9 +15,15 @@ public class Board {
 	private String b_category;
 	private User u_idx;
 	private int user_idx;
-
+	private String fileName;
 	
 	
+	public String getfileName() {
+		return fileName;
+	}
+	public void setfileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public User getU_idx() {
 		return u_idx;
 	}

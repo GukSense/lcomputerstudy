@@ -97,7 +97,8 @@ public class BoardDAO {
 					.append("					b_order,\n")
 					.append("					b_depth,\n")
 					.append("					b_category,\n")
-					.append("					u_idx\n")
+					.append("					u_idx,\n")
+					.append("					b_file\n")
 					.append("		FROM 		board\n")
 					.append(		where + "\n")
 					.append("		) ta\n")
@@ -148,6 +149,7 @@ public class BoardDAO {
 				board.setB_depth(rs.getInt("b_depth"));
 				board.setB_category(rs.getString("b_category"));
 				board.setUser_idx(rs.getInt("u_idx"));
+				board.setfileName(rs.getString("b_file"));
 				list.add(board);
 			}
 			
@@ -200,7 +202,7 @@ public class BoardDAO {
 		User userId = null;
 		User userIdx = null;
 		try {
-			String query = "insert into board(b_title,b_content,b_date,b_writer,b_order,b_depth,b_category,u_idx) values(?,?,NOW(),?,1,0,?,?) ";
+			String query = "insert into board(b_title,b_content,b_date,b_writer,b_order,b_depth,b_category, u_idx, b_file) values(?,?,NOW(),?,1,0,?,?,?) ";
 			userId = board.getUser();
 			userIdx = board.getU_idx();
 			conn = DBConnection.getConnection();
@@ -210,6 +212,7 @@ public class BoardDAO {
 			pstmt.setString(3, userId.getU_id());
 			pstmt.setString(4, board.getB_category());
 			pstmt.setInt(5, userIdx.getU_idx());
+			pstmt.setString(6, board.getfileName());
 			pstmt.executeUpdate();
 			
 			pstmt.close();
@@ -302,6 +305,7 @@ public class BoardDAO {
 				b.setDate(rs.getString("b_date"));
 				b.setHits(rs.getInt("b_hits"));
 				b.setUser_idx(rs.getInt("u_idx"));
+				b.setfileName(rs.getString("b_file"));
 //				b.setReviews(0);
 			}
 			

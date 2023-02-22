@@ -220,16 +220,22 @@ public class Controller extends HttpServlet {
 				view = "board/registration";
 				break;
 			case "/board-process.do":
-				int sizeLimit = 10 * 1024 * 1024;
-				String savePath = request.getRealPath("/upload");
+				int sizeLimit = 100 * 1024 * 1024;
+				String savePath = "C:\\Users\\L3A\\Documents\\work22\\lcomputerstudy\\src\\main\\webapp\\upload";
 				
 				try {
-					multi = new MultipartRequest(request, savePath, sizeLimit, "euc-kr", new DefaultFileRenamePolicy());	//equest 객체와 경로, 파일의 최대 사이즈, 인코딩 ,기본 이름 재명명 정책 객체
+					multi = new MultipartRequest(
+							request, 
+							savePath, 
+							sizeLimit, 
+							"UTF-8", 
+							new DefaultFileRenamePolicy());	//request 객체와 경로, 파일의 최대 사이즈, 인코딩 ,기본 이름 재명명 정책 객체
 				} catch(Exception  e) {
 					e.printStackTrace();
 				}
 				
 				String fileName = multi.getFilesystemName("fileName");
+				
 				
 				board = new Board();
 				session = request.getSession();
@@ -238,9 +244,13 @@ public class Controller extends HttpServlet {
 				board.setUser((User)session.getAttribute("user"));
 				board.setB_category(multi.getParameter("category"));
 				board.setU_idx((User)session.getAttribute("user"));
+				board.setfileName(fileName);
+				
 				boardService = BoardService.getInstance();
 				boardService.writingRegiStraion(board);
+				
 				view = "board/registraion_result";
+				
 				
 				break;
 			case "/board-reply.do":
@@ -276,6 +286,7 @@ public class Controller extends HttpServlet {
 				board.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				board.setB_group(Integer.parseInt(request.getParameter("b_group")));
 				board.setUser_idx(Integer.parseInt(request.getParameter("u_idx")));
+				board.setfileName("b_file");
 				boardService = BoardService.getInstance();
 				boardService.hitsBoard(board);
 				board = boardService.viewContents(board);

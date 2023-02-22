@@ -90,7 +90,7 @@
 			</c:forEach>
 		</ul>
 	</div>
-	
+	<img src="/lcomputerstudy/upload/${board.fileName }" alt="" style="width:150px; height:70px;">${board.fileName }
 	
 	<div>
 		<label><strong>댓글 쓰기</strong></label>
